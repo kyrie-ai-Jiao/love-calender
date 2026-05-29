@@ -1,0 +1,27 @@
+// ===== 纪念日 =====
+export interface Anniversary {
+  id: string;
+  name: string;        // 如 "第一次牵手"
+  date: string;        // "2025-06-15"
+  repeatYearly: boolean; // 是否每年重复
+}
+
+// ===== 情侣核心信息 =====
+export interface CoupleInfo {
+  partner1Name: string;    // 你的名字
+  partner2Name: string;    // 对方的名字
+  startDate: string;       // 在一起的日期 "2025-05-20"
+  partner1Birthday: string; // 你的生日
+  partner2Birthday: string; // 对方的生日
+  customAnniversaries: Anniversary[]; // 自定义纪念日
+}
+
+// ===== 默认值 =====
+export const DEFAULT_COUPLE_INFO: CoupleInfo = {
+  partner1Name: "",
+  partner2Name: "",
+  startDate: "",
+  partner1Birthday: "",
+  partner2Birthday: "",
+  customAnniversaries: [],
+};
