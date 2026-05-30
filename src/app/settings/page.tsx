@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
+import InputField from "@/components/ui/InputField";
 import { useLoveData } from "@/hooks/useLoveData";
 import { CoupleInfo, Anniversary } from "@/types";
 
@@ -212,33 +213,6 @@ export default function SettingsPage() {
       <p className="text-xs text-gray-400 text-center pb-6">
         数据保存在你的浏览器中，不会上传到任何服务器
       </p>
-    </div>
-  );
-}
-
-function InputField({
-  label,
-  value,
-  onChange,
-  placeholder = "",
-  type = "text",
-}: {
-  label: string;
-  value: string;
-  onChange: (v: string) => void;
-  placeholder?: string;
-  type?: string;
-}) {
-  return (
-    <div>
-      <label className="block text-xs text-gray-500 mb-1">{label}</label>
-      <input
-        type={type}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
-        className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-love-400 transition-colors bg-white"
-      />
     </div>
   );
 }

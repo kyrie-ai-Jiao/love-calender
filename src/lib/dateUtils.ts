@@ -23,30 +23,21 @@ export function daysSinceStart(startDate: string): number {
 }
 
 /**
- * 计算距离下一个周年纪念日还有多少天
- * 例如：2025-05-20 在一起，今天是 2026-05-15，返回 5
+ * 计算周年纪念的年份数
+ * 例如：2025-05-20 开始，今天是 2026-05-15，返回 0（还没到1周年）
+ * 例如：2025-05-20 开始，今天是 2026-06-01，返回 1
  */
-export function daysUntilNextAnniversary(startDate: string): number {
+export function getAnniversaryYears(startDate: string): number {
   const today = new Date();
   const start = new Date(startDate);
-  const currentYear = today.getFullYear();
-
-  // 今年的纪念日
-  const thisYearAnniversary = new Date(
-    currentYear,
-    start.getMonth(),
-    start.getDate()
+  return (
+    today.getFullYear() -
+    start.getFullYear() -
+    (today.getMonth() < start.getMonth() ||
+    (today.getMonth() === start.getMonth() && today.getDate() < start.getDate())
+      ? 1
+      : 0)
   );
-
-  // 如果今年的已经过了，算明年的
-  const anniversary =
-    thisYearAnniversary >= today
-      ? thisYearAnniversary
-      : new Date(currentYear + 1, start.getMonth(), start.getDate());
-
-  const todayStr = formatDateStr(today);
-  const annStr = formatDateStr(anniversary);
-  return daysBetween(todayStr, annStr);
 }
 
 /**

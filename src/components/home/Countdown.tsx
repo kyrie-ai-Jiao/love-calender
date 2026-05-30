@@ -1,10 +1,10 @@
 "use client";
 
 import { useMemo } from "react";
-import { Clock, Gift, Heart, Cake, Star } from "lucide-react";
+import { Clock, Heart, Cake, Star } from "lucide-react";
 import Card from "@/components/ui/Card";
 import { useLoveData } from "@/hooks/useLoveData";
-import { daysUntil, formatDateStr } from "@/lib/dateUtils";
+import { daysUntil, getAnniversaryYears } from "@/lib/dateUtils";
 import { HOLIDAYS } from "@/data/holidays";
 
 interface CountdownEvent {
@@ -15,42 +15,36 @@ interface CountdownEvent {
   emoji?: string;
 }
 
+const ICON_MAP = {
+  anniversary: <Heart className="w-4 h-4 text-love-400 fill-love-400" />,
+  birthday: <Cake className="w-4 h-4 text-love-400" />,
+  holiday: <Star className="w-4 h-4 text-love-400 fill-love-400" />,
+} as const;
+
 export default function Countdown() {
   const { coupleInfo, hasSetup, loaded } = useLoveData();
 
-  // 计算所有即将到来的事件
   const upcomingEvents = useMemo((): CountdownEvent[] => {
     if (!hasSetup) return [];
 
     const events: CountdownEvent[] = [];
     const start = new Date(coupleInfo.startDate);
-    const today = new Date();
-    const todayStr = formatDateStr(today);
 
-    // 1. 恋爱周年纪念日
+    // 恋爱周年纪念日
     const annMonth = start.getMonth() + 1;
     const annDay = start.getDate();
-    const annDaysLeft = daysUntil(annMonth, annDay);
-
-    // 计算这是第几周年
-    const years =
-      today.getFullYear() -
-      start.getFullYear() -
-      (today.getMonth() < start.getMonth() ||
-      (today.getMonth() === start.getMonth() && today.getDate() < start.getDate())
-        ? 1
-        : 0);
+    const years = getAnniversaryYears(coupleInfo.startDate);
 
     events.push({
       id: "anniversary",
       name: `${years + 1}周年纪念日`,
-      daysLeft: annDaysLeft,
+      daysLeft: daysUntil(annMonth, annDay),
       icon: "anniversary",
     });
 
-    // 2. 双方生日
+    // 双方生日
     if (coupleInfo.partner1Birthday) {
-      const [y, m, d] = coupleInfo.partner1Birthday.split("-").map(Number);
+      const [, m, d] = coupleInfo.partner1Birthday.split("-").map(Number);
       events.push({
         id: "partner1-birthday",
         name: `${coupleInfo.partner1Name || "你"}的生日`,
@@ -60,7 +54,7 @@ export default function Countdown() {
     }
 
     if (coupleInfo.partner2Birthday) {
-      const [y, m, d] = coupleInfo.partner2Birthday.split("-").map(Number);
+      const [, m, d] = coupleInfo.partner2Birthday.split("-").map(Number);
       events.push({
         id: "partner2-birthday",
         name: `${coupleInfo.partner2Name || "TA"}的生日`,
@@ -69,49 +63,20 @@ export default function Countdown() {
       });
     }
 
-    // 3. 内置节日
-    const currentYear = today.getFullYear();
+    // 内置节日
     for (const holiday of HOLIDAYS) {
-      // 跳过今年已过期的七夕近似日期（保留最近一年的）
-      const holidayDate = new Date(currentYear, holiday.month - 1, holiday.day);
-      if (holidayDate < today && holiday.type === "chinese") {
-        // 农历节日，如果今年已过，算明年的
-        const nextDate = new Date(currentYear + 1, holiday.month - 1, holiday.day);
-        const nextStr = formatDateStr(nextDate);
-        const tStr = formatDateStr(today);
-        const diffTime = nextDate.getTime() - new Date(tStr).getTime();
-        const daysLeft = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-        events.push({
-          id: holiday.id,
-          name: holiday.name,
-          daysLeft,
-          icon: "holiday",
-          emoji: holiday.emoji,
-        });
-      } else {
-        const daysLeft = daysUntil(holiday.month, holiday.day);
-        events.push({
-          id: holiday.id,
-          name: holiday.name,
-          daysLeft,
-          icon: "holiday",
-          emoji: holiday.emoji,
-        });
-      }
+      events.push({
+        id: holiday.id,
+        name: holiday.name,
+        daysLeft: daysUntil(holiday.month, holiday.day),
+        icon: "holiday",
+        emoji: holiday.emoji,
+      });
     }
 
-    // 按剩余天数排序，取最近的 4 个
     return events.sort((a, b) => a.daysLeft - b.daysLeft).slice(0, 4);
   }, [coupleInfo, hasSetup]);
 
-  // 图标映射
-  const iconMap = {
-    anniversary: <Heart className="w-4 h-4 text-love-400 fill-love-400" />,
-    birthday: <Cake className="w-4 h-4 text-love-400" />,
-    holiday: <Star className="w-4 h-4 text-love-400 fill-love-400" />,
-  };
-
-  // 加载中
   if (!loaded) {
     return (
       <Card className="py-4 animate-pulse">
@@ -124,7 +89,6 @@ export default function Countdown() {
     );
   }
 
-  // 未设置
   if (!hasSetup) {
     return (
       <Card className="text-center py-6">
@@ -153,7 +117,7 @@ export default function Countdown() {
             }`}
           >
             <div className="flex items-center gap-2.5 min-w-0">
-              {iconMap[event.icon]}
+              {ICON_MAP[event.icon]}
               <span className="text-sm text-gray-700 truncate">
                 {event.emoji && <span className="mr-1">{event.emoji}</span>}
                 {event.name}
@@ -185,7 +149,6 @@ export default function Countdown() {
         )}
       </div>
 
-      {/* 底部说明 */}
       <p className="text-xs text-gray-400 text-center mt-3">
         提前7天提醒你
       </p>

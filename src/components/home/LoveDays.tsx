@@ -29,9 +29,18 @@ export default function LoveDays() {
 
   const days = hasSetup ? daysSinceStart(coupleInfo.startDate) : 0;
 
-  const isSpecialDay = [100, 200, 300, 365, 520, 999, 1000, 1314].includes(
-    days
-  );
+  const SPECIAL_DAY_MESSAGES: Record<number, string> = {
+    100: "在一起100天啦",
+    200: "200天纪念日",
+    300: "300天啦",
+    365: "一周年快乐",
+    520: "520天",
+    999: "长长久久",
+    1000: "1000天里程碑",
+    1314: "一生一世 (1314天)",
+  };
+  const specialMessage = SPECIAL_DAY_MESSAGES[days];
+  const isSpecialDay = !!specialMessage;
 
   const handleSave = () => {
     const newInfo: CoupleInfo = {
@@ -73,17 +82,10 @@ export default function LoveDays() {
               <p className="text-xs sm:text-sm text-love-400/70">天</p>
             </div>
 
-            {isSpecialDay && (
+            {specialMessage && (
               <div className="bg-love-100/60 rounded-2xl py-2 px-4 inline-block animate-in fade-in zoom-in duration-300">
                 <p className="text-love-600 text-sm font-medium">
-                  {days === 100 && "在一起100天啦"}
-                  {days === 200 && "200天纪念日"}
-                  {days === 300 && "300天啦"}
-                  {days === 365 && "一周年快乐"}
-                  {days === 520 && "520天"}
-                  {days === 999 && "长长久久"}
-                  {days === 1000 && "1000天里程碑"}
-                  {days === 1314 && "一生一世 (1314天)"}
+                  {specialMessage}
                 </p>
               </div>
             )}

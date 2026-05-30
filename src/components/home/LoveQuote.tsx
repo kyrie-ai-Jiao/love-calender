@@ -1,12 +1,11 @@
 "use client";
 
-import { useMemo } from "react";
 import { Quote as QuoteIcon } from "lucide-react";
 import Card from "@/components/ui/Card";
 import { getTodayQuote } from "@/data/quotes";
 
 export default function LoveQuote() {
-  const quote = useMemo(() => getTodayQuote(), []);
+  const quote = getTodayQuote();
 
   return (
     <Card className="bg-gradient-to-br from-cream-100/50 to-love-50/50 border-love-100/50">

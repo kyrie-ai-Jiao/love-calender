@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import { Bell, Heart, Cake, Star, Sparkles } from "lucide-react";
 import Card from "@/components/ui/Card";
 import { useLoveData } from "@/hooks/useLoveData";
-import { daysUntil, formatDateStr } from "@/lib/dateUtils";
+import { daysUntil, getAnniversaryYears } from "@/lib/dateUtils";
 import { HOLIDAYS } from "@/data/holidays";
 
 interface Reminder {
@@ -16,30 +16,32 @@ interface Reminder {
   subtitle: string;
 }
 
+const ICON_MAP = {
+  anniversary: <Heart className="w-4 h-4 text-love-400 fill-love-400" />,
+  birthday: <Cake className="w-4 h-4 text-love-400" />,
+  holiday: <Star className="w-4 h-4 text-love-400 fill-love-400" />,
+} as const;
+
+const getAlertStyle = (daysLeft: number) => {
+  if (daysLeft === 0) return "bg-love-100 border-love-300 border-2";
+  if (daysLeft <= 3) return "bg-love-50 border-love-200 border";
+  return "bg-amber-50/50 border-amber-100 border";
+};
+
 export default function ReminderList() {
   const { coupleInfo, hasSetup, loaded } = useLoveData();
 
-  // 找出7天内的事件
   const reminders = useMemo((): Reminder[] => {
     if (!hasSetup) return [];
 
     const result: Reminder[] = [];
     const start = new Date(coupleInfo.startDate);
-    const today = new Date();
-    const todayStr = formatDateStr(today);
 
-    // 1. 恋爱周年纪念日
+    // 恋爱周年纪念日
     const annMonth = start.getMonth() + 1;
     const annDay = start.getDate();
     const annDaysLeft = daysUntil(annMonth, annDay);
-
-    const years =
-      today.getFullYear() -
-      start.getFullYear() -
-      (today.getMonth() < start.getMonth() ||
-      (today.getMonth() === start.getMonth() && today.getDate() < start.getDate())
-        ? 1
-        : 0);
+    const years = getAnniversaryYears(coupleInfo.startDate);
 
     if (annDaysLeft <= 7) {
       result.push({
@@ -51,9 +53,9 @@ export default function ReminderList() {
       });
     }
 
-    // 2. 生日
+    // 生日
     if (coupleInfo.partner1Birthday) {
-      const [y, m, d] = coupleInfo.partner1Birthday.split("-").map(Number);
+      const [, m, d] = coupleInfo.partner1Birthday.split("-").map(Number);
       const bd = daysUntil(m, d);
       if (bd <= 7) {
         result.push({
@@ -67,7 +69,7 @@ export default function ReminderList() {
     }
 
     if (coupleInfo.partner2Birthday) {
-      const [y, m, d] = coupleInfo.partner2Birthday.split("-").map(Number);
+      const [, m, d] = coupleInfo.partner2Birthday.split("-").map(Number);
       const bd = daysUntil(m, d);
       if (bd <= 7) {
         result.push({
@@ -80,10 +82,10 @@ export default function ReminderList() {
       }
     }
 
-    // 3. 自定义纪念日
+    // 自定义纪念日
     for (const ann of coupleInfo.customAnniversaries) {
       if (!ann.date) continue;
-      const [y, m, d] = ann.date.split("-").map(Number);
+      const [, m, d] = ann.date.split("-").map(Number);
       const dl = daysUntil(m, d);
       if (dl <= 7) {
         result.push({
@@ -96,8 +98,7 @@ export default function ReminderList() {
       }
     }
 
-    // 4. 内置节日
-    const currentYear = today.getFullYear();
+    // 内置节日
     for (const holiday of HOLIDAYS) {
       const dl = daysUntil(holiday.month, holiday.day);
       if (dl <= 7) {
@@ -112,45 +113,22 @@ export default function ReminderList() {
       }
     }
 
-    // 按剩余天数排序
     return result.sort((a, b) => a.daysLeft - b.daysLeft);
   }, [coupleInfo, hasSetup]);
-
-  // 图标映射
-  const iconMap = {
-    anniversary: <Heart className="w-4 h-4 text-love-400 fill-love-400" />,
-    birthday: <Cake className="w-4 h-4 text-love-400" />,
-    holiday: <Star className="w-4 h-4 text-love-400 fill-love-400" />,
-  };
-
-  // 根据倒计时天数返回不同的样式
-  const getAlertStyle = (daysLeft: number) => {
-    if (daysLeft === 0)
-      return "bg-love-100 border-love-300 border-2";
-    if (daysLeft <= 3)
-      return "bg-love-50 border-love-200 border";
-    return "bg-amber-50/50 border-amber-100 border";
-  };
 
   if (!loaded) {
     return (
       <Card className="py-4 animate-pulse">
         <div className="h-4 w-24 bg-gray-200 rounded mb-3" />
-        <div className="space-y-2">
-          <div className="h-10 w-full bg-gray-100 rounded-xl" />
-        </div>
+        <div className="h-10 w-full bg-gray-100 rounded-xl" />
       </Card>
     );
   }
 
-  // 没有临近的事件时不显示
-  if (reminders.length === 0) {
-    return null;
-  }
+  if (reminders.length === 0) return null;
 
   return (
     <Card className="overflow-hidden">
-      {/* 顶部铃铛标题 */}
       <div className="flex items-center gap-2 mb-3">
         <div className="p-1.5 bg-love-100 rounded-full">
           <Bell className="w-4 h-4 text-love-500" />
@@ -171,7 +149,7 @@ export default function ReminderList() {
           >
             <div className="flex items-center gap-2.5 min-w-0">
               <div className="p-1.5 bg-white/70 rounded-full flex-shrink-0">
-                {iconMap[reminder.icon]}
+                {ICON_MAP[reminder.icon]}
               </div>
               <div className="min-w-0">
                 <p className="text-sm font-medium text-gray-800 truncate">
