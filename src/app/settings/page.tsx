@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useRef } from "react";
 import {
   ArrowLeft,
   Heart,
@@ -10,6 +11,8 @@ import {
   Plus,
   Trash2,
   Save,
+  Download,
+  Upload,
 } from "lucide-react";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
@@ -21,8 +24,10 @@ export default function SettingsPage() {
   const router = useRouter();
   const { coupleInfo, updateCoupleInfo } = useLoveData();
 
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [form, setForm] = useState<CoupleInfo>(coupleInfo);
   const [saved, setSaved] = useState(false);
+  const [importMsg, setImportMsg] = useState("");
 
   useEffect(() => {
     setForm(coupleInfo);
@@ -209,6 +214,80 @@ export default function SettingsPage() {
           </>
         )}
       </Button>
+
+      {/* ===== 数据导入/导出 ===== */}
+      <Card>
+        <h2 className="text-sm font-semibold text-gray-700 mb-1">数据管理</h2>
+        <p className="text-xs text-gray-400 mb-4">导出备份或从备份恢复数据</p>
+
+        <div className="flex gap-3">
+          {/* 导出 */}
+          <button
+            onClick={() => {
+              const json = JSON.stringify(coupleInfo, null, 2);
+              const blob = new Blob([json], { type: "application/json" });
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement("a");
+              a.href = url;
+              a.download = `love-calendar-backup-${new Date().toISOString().split("T")[0]}.json`;
+              a.click();
+              URL.revokeObjectURL(url);
+              setImportMsg("数据已导出");
+              setTimeout(() => setImportMsg(""), 2000);
+            }}
+            className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl border-2 border-gray-200 text-sm text-gray-600 hover:border-love-300 hover:text-love-500 transition-colors cursor-pointer"
+          >
+            <Download className="w-4 h-4" />
+            导出备份
+          </button>
+
+          {/* 导入 */}
+          <button
+            onClick={() => fileInputRef.current?.click()}
+            className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl border-2 border-gray-200 text-sm text-gray-600 hover:border-love-300 hover:text-love-500 transition-colors cursor-pointer"
+          >
+            <Upload className="w-4 h-4" />
+            导入备份
+          </button>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".json"
+            className="hidden"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (!file) return;
+              const reader = new FileReader();
+              reader.onload = () => {
+                try {
+                  const data = JSON.parse(reader.result as string) as CoupleInfo;
+                  // 基础验证：必须有 partner1Name 和 startDate
+                  if (!data.partner1Name || !data.startDate) {
+                    setImportMsg("文件格式不正确");
+                    setTimeout(() => setImportMsg(""), 3000);
+                    return;
+                  }
+                  updateCoupleInfo(data);
+                  setForm(data);
+                  setImportMsg("数据已恢复");
+                  setTimeout(() => setImportMsg(""), 2000);
+                } catch {
+                  setImportMsg("文件格式不正确");
+                  setTimeout(() => setImportMsg(""), 3000);
+                }
+              };
+              reader.readAsText(file);
+              e.target.value = "";
+            }}
+          />
+        </div>
+
+        {importMsg && (
+          <p className="text-xs text-love-500 text-center mt-3 font-medium">
+            {importMsg}
+          </p>
+        )}
+      </Card>
 
       <p className="text-xs text-gray-400 text-center pb-6">
         数据保存在你的浏览器中，不会上传到任何服务器
