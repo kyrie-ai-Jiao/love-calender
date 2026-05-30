@@ -5,10 +5,9 @@ import Link from "next/link";
 import { Heart, Calendar, Settings } from "lucide-react";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
+import AnimatedNumber from "@/components/ui/AnimatedNumber";
 import { useLoveData } from "@/hooks/useLoveData";
 import { daysSinceStart, formatChineseDate } from "@/lib/dateUtils";
-import { CoupleInfo } from "@/types";
-
 const SPECIAL_DAY_MESSAGES: Record<number, string> = {
   100: "在一起100天啦",
   200: "200天纪念日",
@@ -89,7 +88,7 @@ export default function LoveDays() {
                   specialMessage ? "animate-bounce-soft" : ""
                 }`}
               >
-                {days}
+                <AnimatedNumber value={days} duration={600} />
               </p>
               <p className="text-sm text-warm-400">天</p>
             </div>
