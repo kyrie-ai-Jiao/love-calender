@@ -18,10 +18,11 @@ interface StoredData {
 type MigrationFn = (data: CoupleInfo) => CoupleInfo;
 
 const MIGRATIONS: Record<number, MigrationFn> = {
-  // 示例：当从版本1升级到版本2时，取消注释并填写：
-  // 1: (data) => {
-  //   return { ...data, newField: "default value" };
-  // },
+  // 版本1 → 版本2：新增 photos 字段
+  1: (data) => ({
+    ...data,
+    photos: [],
+  }),
 };
 
 /**
