@@ -30,11 +30,10 @@ export default function SettingsPage() {
   const [importMsg, setImportMsg] = useState("");
 
   // 从 coupleInfo 同步到表单（仅在首次加载时）
-  const initialized = useRef(false);
+  // 当 coupleInfo 有数据时，同步到表单
   useEffect(() => {
-    if (!initialized.current && coupleInfo.partner1Name) {
+    if (coupleInfo.partner1Name) {
       setForm(coupleInfo);
-      initialized.current = true;
     }
   }, [coupleInfo]);
 
