@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -73,11 +73,11 @@ export default function AlbumPage() {
         <div className="flex items-center gap-3">
           <button
             onClick={() => router.back()}
-            className="p-2 -ml-2 rounded-xl hover:bg-love-50 text-gray-400 hover:text-love-500 transition-colors cursor-pointer"
+            className="p-2 -ml-2 rounded-xl hover:bg-coral-50 text-warm-400 hover:text-coral-400 transition-colors cursor-pointer"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
-          <h1 className="text-lg sm:text-xl font-semibold text-gray-800">
+          <h1 className="text-lg sm:text-xl font-semibold text-warm-800">
             {photos.length > 0 ? `我们的相册 (${photos.length})` : "我们的相册"}
           </h1>
         </div>
@@ -85,17 +85,17 @@ export default function AlbumPage() {
 
       {!hasSetup ? (
         <Card className="text-center py-12">
-          <ImageIcon className="w-8 h-8 text-love-200 mx-auto mb-3" />
-          <p className="text-sm text-gray-400">请先在设置中填写恋爱信息</p>
+          <ImageIcon className="w-8 h-8 text-coral-100 mx-auto mb-3" />
+          <p className="text-sm text-warm-400">请先在设置中填写恋爱信息</p>
         </Card>
       ) : photos.length === 0 ? (
         /* 空相册引导 */
         <Card className="text-center py-12">
-          <ImageIcon className="w-12 h-12 text-love-200 mx-auto mb-4" />
-          <p className="text-gray-400 text-sm mb-2">相册还是空的</p>
-          <p className="text-xs text-gray-300 mb-4">记录你们的每一个美好瞬间</p>
+          <ImageIcon className="w-12 h-12 text-coral-100 mx-auto mb-4" />
+          <p className="text-warm-400 text-sm mb-2">相册还是空的</p>
+          <p className="text-xs text-warm-300 mb-4">记录你们的每一个美好瞬间</p>
 
-          <label className="inline-flex items-center gap-2 px-5 py-2.5 bg-love-400 text-white rounded-2xl text-sm font-medium cursor-pointer hover:bg-love-500 transition-colors shadow-md shadow-love-200/50">
+          <label className="inline-flex items-center gap-2 px-5 py-2.5 bg-coral-400 text-white rounded-2xl text-sm font-medium cursor-pointer hover:bg-coral-500 transition-colors shadow-md shadow-love-200/50">
             <ImagePlus className="w-4 h-4" />
             上传第一张照片
             <input
@@ -113,8 +113,8 @@ export default function AlbumPage() {
           <label
             className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium cursor-pointer transition-colors ${
               uploading
-                ? "bg-gray-200 text-gray-400"
-                : "bg-love-50 text-love-500 hover:bg-love-100"
+                ? "bg-warm-200 text-warm-400"
+                : "bg-coral-50 text-coral-400 hover:bg-coral-100"
             }`}
           >
             <ImagePlus className="w-4 h-4" />
@@ -172,9 +172,9 @@ export default function AlbumPage() {
                           handleCaptionChange(photo.id, e.target.value)
                         }
                         placeholder="写一句说明..."
-                        className="w-full text-xs border border-gray-200 rounded-xl px-3 py-2 focus:outline-none focus:border-love-400 transition-colors"
+                        className="w-full text-xs border border-warm-200 rounded-xl px-3 py-2 focus:outline-none focus:border-coral-300 transition-colors"
                       />
-                      <p className="text-xs text-gray-400">{photo.date}</p>
+                      <p className="text-xs text-warm-400">{photo.date}</p>
                     </div>
                   )}
                 </div>
@@ -183,7 +183,7 @@ export default function AlbumPage() {
           </div>
 
           {/* 底部提示 */}
-          <p className="text-xs text-gray-400 text-center">
+          <p className="text-xs text-warm-400 text-center">
             照片经过压缩存储在浏览器中，不会上传到任何服务器
           </p>
         </>

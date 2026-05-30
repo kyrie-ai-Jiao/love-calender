@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useMemo, useState } from "react";
 import { Clock, Heart, Cake, Star } from "lucide-react";
@@ -19,9 +19,9 @@ interface CountdownEvent {
 }
 
 const ICON_MAP = {
-  anniversary: <Heart className="w-4 h-4 text-love-400 fill-love-400" />,
-  birthday: <Cake className="w-4 h-4 text-love-400" />,
-  holiday: <Star className="w-4 h-4 text-love-400 fill-love-400" />,
+  anniversary: <Heart className="w-4 h-4 text-coral-400 fill-coral-400" />,
+  birthday: <Cake className="w-4 h-4 text-coral-400" />,
+  holiday: <Star className="w-4 h-4 text-coral-400 fill-coral-400" />,
 } as const;
 
 export default function Countdown() {
@@ -92,10 +92,10 @@ export default function Countdown() {
   if (!loaded) {
     return (
       <Card className="py-4 animate-pulse">
-        <div className="h-4 w-24 bg-gray-200 rounded mb-3" />
+        <div className="h-4 w-24 bg-warm-200 rounded mb-3" />
         <div className="space-y-2">
-          <div className="h-8 w-full bg-gray-100 rounded-xl" />
-          <div className="h-8 w-full bg-gray-100 rounded-xl" />
+          <div className="h-8 w-full bg-warm-100 rounded-xl" />
+          <div className="h-8 w-full bg-warm-100 rounded-xl" />
         </div>
       </Card>
     );
@@ -104,9 +104,9 @@ export default function Countdown() {
   if (!hasSetup) {
     return (
       <Card className="text-center py-6">
-        <Clock className="w-5 h-5 text-love-300 mx-auto mb-2" />
-        <p className="text-xs text-gray-400">设置恋爱信息后</p>
-        <p className="text-xs text-gray-400">自动显示倒计时</p>
+        <Clock className="w-5 h-5 text-coral-200 mx-auto mb-2" />
+        <p className="text-xs text-warm-400">设置恋爱信息后</p>
+        <p className="text-xs text-warm-400">自动显示倒计时</p>
       </Card>
     );
   }
@@ -115,8 +115,8 @@ export default function Countdown() {
     <>
       <Card>
         <div className="flex items-center gap-2 mb-3">
-          <Clock className="w-4 h-4 text-love-400" />
-          <h3 className="text-sm font-semibold text-gray-700">即将到来 · 点击查看详情</h3>
+          <Clock className="w-4 h-4 text-coral-400" />
+          <h3 className="text-sm font-semibold text-warm-800">即将到来 · 点击查看详情</h3>
         </div>
 
         <div className="space-y-2">
@@ -126,18 +126,18 @@ export default function Countdown() {
               onClick={() => setSelectedEvent(event)}
               className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl transition-colors cursor-pointer text-left ${
                 event.daysLeft <= 7
-                  ? "bg-love-50 border border-love-200 hover:bg-love-100"
-                  : "bg-gray-50/50 hover:bg-gray-50 hover:border-gray-200 border border-transparent"
+                  ? "bg-coral-50 border border-coral-200 hover:bg-coral-100"
+                  : "bg-warm-50/50 hover:bg-warm-50 hover:border-warm-200 border border-transparent"
               }`}
             >
               <div className="flex items-center gap-2.5 min-w-0">
                 {ICON_MAP[event.icon]}
-                <span className="text-sm text-gray-700 truncate">
+                <span className="text-sm text-warm-800 truncate">
                   {event.emoji && <span className="mr-1">{event.emoji}</span>}
                   {event.name}
                 </span>
                 {event.daysLeft <= 7 && (
-                  <span className="text-xs bg-love-400 text-white px-1.5 py-0.5 rounded-full font-medium flex-shrink-0">
+                  <span className="text-xs bg-coral-400 text-white px-1.5 py-0.5 rounded-full font-medium flex-shrink-0">
                     临近
                   </span>
                 )}
@@ -146,24 +146,24 @@ export default function Countdown() {
               <div className="flex items-baseline gap-1 flex-shrink-0 ml-3">
                 <span
                   className={`text-xl font-bold ${
-                    event.daysLeft <= 7 ? "text-love-500" : "text-gray-600"
+                    event.daysLeft <= 7 ? "text-coral-400" : "text-warm-700"
                   }`}
                 >
                   {event.daysLeft}
                 </span>
-                <span className="text-xs text-gray-400">天</span>
+                <span className="text-xs text-warm-400">天</span>
               </div>
             </button>
           ))}
 
           {upcomingEvents.length === 0 && (
-            <p className="text-xs text-gray-400 text-center py-2">
+            <p className="text-xs text-warm-400 text-center py-2">
               暂无即将到来的事件
             </p>
           )}
         </div>
 
-        <p className="text-xs text-gray-400 text-center mt-3">
+        <p className="text-xs text-warm-400 text-center mt-3">
           提前7天提醒你
         </p>
       </Card>

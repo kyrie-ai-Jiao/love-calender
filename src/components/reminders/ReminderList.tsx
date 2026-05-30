@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useMemo, useState } from "react";
 import { Bell, Heart, Cake, Star, Sparkles } from "lucide-react";
@@ -20,15 +20,15 @@ interface Reminder {
 }
 
 const ICON_MAP = {
-  anniversary: <Heart className="w-4 h-4 text-love-400 fill-love-400" />,
-  birthday: <Cake className="w-4 h-4 text-love-400" />,
-  holiday: <Star className="w-4 h-4 text-love-400 fill-love-400" />,
+  anniversary: <Heart className="w-4 h-4 text-coral-400 fill-coral-400" />,
+  birthday: <Cake className="w-4 h-4 text-coral-400" />,
+  holiday: <Star className="w-4 h-4 text-coral-400 fill-coral-400" />,
 } as const;
 
 const getAlertStyle = (daysLeft: number) => {
-  if (daysLeft === 0) return "bg-love-100 border-love-300 border-2";
-  if (daysLeft <= 3) return "bg-love-50 border-love-200 border";
-  return "bg-amber-50/50 border-amber-100 border";
+  if (daysLeft === 0) return "bg-coral-100 border-coral-300 border-2";
+  if (daysLeft <= 3) return "bg-coral-50 border-coral-200 border";
+  return "bg-apricot-400/10 border-apricot-400/20 border";
 };
 
 export default function ReminderList() {
@@ -133,8 +133,8 @@ export default function ReminderList() {
   if (!loaded) {
     return (
       <Card className="py-4 animate-pulse">
-        <div className="h-4 w-24 bg-gray-200 rounded mb-3" />
-        <div className="h-10 w-full bg-gray-100 rounded-xl" />
+        <div className="h-4 w-24 bg-warm-200 rounded mb-3" />
+        <div className="h-10 w-full bg-warm-100 rounded-xl" />
       </Card>
     );
   }
@@ -145,12 +145,12 @@ export default function ReminderList() {
     <>
       <Card className="overflow-hidden">
         <div className="flex items-center gap-2 mb-3">
-          <div className="p-1.5 bg-love-100 rounded-full">
-            <Bell className="w-4 h-4 text-love-500" />
+          <div className="p-1.5 bg-coral-100 rounded-full">
+            <Bell className="w-4 h-4 text-coral-400" />
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-gray-700">临近提醒 · 点击查看详情</h3>
-            <p className="text-xs text-gray-400">7天内即将到来</p>
+            <h3 className="text-sm font-semibold text-warm-800">临近提醒 · 点击查看详情</h3>
+            <p className="text-xs text-warm-400">7天内即将到来</p>
           </div>
         </div>
 
@@ -168,11 +168,11 @@ export default function ReminderList() {
                   {ICON_MAP[reminder.icon]}
                 </div>
                 <div className="min-w-0">
-                  <p className="text-sm font-medium text-gray-800 truncate">
+                  <p className="text-sm font-medium text-warm-800 truncate">
                     {reminder.emoji && <span className="mr-1">{reminder.emoji}</span>}
                     {reminder.name}
                   </p>
-                  <p className="text-xs text-love-500 font-medium">
+                  <p className="text-xs text-coral-400 font-medium">
                     {reminder.subtitle}
                   </p>
                 </div>
@@ -180,13 +180,13 @@ export default function ReminderList() {
 
               <div className="flex items-center gap-1 flex-shrink-0 ml-3">
                 {reminder.daysLeft === 0 ? (
-                  <Sparkles className="w-4 h-4 text-love-400 animate-pulse" />
+                  <Sparkles className="w-4 h-4 text-coral-400 animate-pulse" />
                 ) : (
                   <>
-                    <span className="text-xl font-bold text-love-500">
+                    <span className="text-xl font-bold text-coral-400">
                       {reminder.daysLeft}
                     </span>
-                    <span className="text-xs text-love-400">天</span>
+                    <span className="text-xs text-coral-400">天</span>
                   </>
                 )}
               </div>

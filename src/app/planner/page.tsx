@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -88,13 +88,13 @@ export default function PlannerPage() {
       <div className="flex items-center gap-3">
         <button
           onClick={() => router.back()}
-          className="p-2 -ml-2 rounded-xl hover:bg-love-50 dark:hover:bg-gray-800 text-gray-400 hover:text-love-500 transition-colors cursor-pointer"
+          className="p-2 -ml-2 rounded-xl hover:bg-coral-50 dark:hover:bg-white/5 text-warm-400 hover:text-coral-400 transition-colors cursor-pointer"
         >
           <ArrowLeft className="w-5 h-5" />
         </button>
         <div className="flex items-center gap-2">
-          <Sparkles className="w-5 h-5 text-love-400" />
-          <h1 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-200">
+          <Sparkles className="w-5 h-5 text-coral-400" />
+          <h1 className="text-lg sm:text-xl font-semibold text-warm-800 dark:text-gray-200">
             AI 策划师
           </h1>
         </div>
@@ -102,11 +102,11 @@ export default function PlannerPage() {
 
       {/* 表单 */}
       <Card className="space-y-4">
-        <p className="text-xs text-gray-400">填写信息，AI 为你生成完整的约会方案</p>
+        <p className="text-xs text-warm-400">填写信息，AI 为你生成完整的约会方案</p>
 
         {/* 预算 */}
         <div>
-          <label className="block text-xs text-gray-500 mb-2">预算</label>
+          <label className="block text-xs text-warm-500 mb-2">预算</label>
           <div className="grid grid-cols-4 gap-2">
             {["100元", "300元", "500元", "1000元"].map((b) => (
               <button
@@ -114,8 +114,8 @@ export default function PlannerPage() {
                 onClick={() => setBudget(b)}
                 className={`py-2 rounded-xl text-sm font-medium transition-all cursor-pointer ${
                   budget === b
-                    ? "bg-love-400 text-white shadow-md"
-                    : "bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-love-50 dark:hover:bg-love-500/10"
+                    ? "bg-coral-400 text-white shadow-md"
+                    : "bg-warm-50 dark:bg-gray-800 text-warm-700 dark:text-warm-300 hover:bg-coral-50 dark:hover:bg-coral-500/10"
                 }`}
               >
                 {b}
@@ -126,7 +126,7 @@ export default function PlannerPage() {
 
         {/* 场景 */}
         <div>
-          <label className="block text-xs text-gray-500 mb-2">场景</label>
+          <label className="block text-xs text-warm-500 mb-2">场景</label>
           <div className="flex flex-wrap gap-2">
             {SCENES.map((s) => (
               <button
@@ -134,8 +134,8 @@ export default function PlannerPage() {
                 onClick={() => setScene(s.label)}
                 className={`px-3 py-1.5 rounded-xl text-sm transition-all cursor-pointer ${
                   scene === s.label
-                    ? "bg-love-400 text-white shadow-md"
-                    : "bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-love-50"
+                    ? "bg-coral-400 text-white shadow-md"
+                    : "bg-warm-50 dark:bg-gray-800 text-warm-700 dark:text-warm-300 hover:bg-coral-50"
                 }`}
               >
                 {s.emoji} {s.label}
@@ -146,22 +146,22 @@ export default function PlannerPage() {
 
         {/* 城市 */}
         <div>
-          <label className="block text-xs text-gray-500 mb-1">城市</label>
+          <label className="block text-xs text-warm-500 mb-1">城市</label>
           <div className="relative">
-            <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-warm-400" />
             <input
               type="text"
               value={city}
               onChange={(e) => setCity(e.target.value)}
               placeholder="如：上海、北京..."
-              className="w-full border border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 rounded-xl pl-10 pr-3 py-2.5 text-sm focus:outline-none focus:border-love-400 transition-colors"
+              className="w-full border border-warm-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 rounded-xl pl-10 pr-3 py-2.5 text-sm focus:outline-none focus:border-coral-300 transition-colors"
             />
           </div>
         </div>
 
         {/* 风格 */}
         <div>
-          <label className="block text-xs text-gray-500 mb-2">风格</label>
+          <label className="block text-xs text-warm-500 mb-2">风格</label>
           <div className="flex flex-wrap gap-2">
             {STYLES.map((s) => (
               <button
@@ -169,8 +169,8 @@ export default function PlannerPage() {
                 onClick={() => setStyle(s.label)}
                 className={`px-3 py-1.5 rounded-xl text-sm transition-all cursor-pointer ${
                   style === s.label
-                    ? "bg-love-400 text-white shadow-md"
-                    : "bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-love-50"
+                    ? "bg-coral-400 text-white shadow-md"
+                    : "bg-warm-50 dark:bg-gray-800 text-warm-700 dark:text-warm-300 hover:bg-coral-50"
                 }`}
               >
                 {s.emoji} {s.label}
@@ -209,11 +209,11 @@ export default function PlannerPage() {
       {/* 加载骨架 */}
       {loading && (
         <Card className="animate-pulse space-y-4">
-          <div className="h-6 w-48 bg-gray-200 dark:bg-gray-700 rounded" />
+          <div className="h-6 w-48 bg-warm-200 dark:bg-gray-700 rounded" />
           {[...Array(3)].map((_, i) => (
             <div key={i} className="space-y-2">
-              <div className="h-4 w-32 bg-gray-100 dark:bg-gray-700 rounded" />
-              <div className="h-10 w-full bg-gray-50 dark:bg-gray-700 rounded-xl" />
+              <div className="h-4 w-32 bg-warm-100 dark:bg-gray-700 rounded" />
+              <div className="h-10 w-full bg-warm-50 dark:bg-gray-700 rounded-xl" />
             </div>
           ))}
         </Card>
@@ -223,12 +223,12 @@ export default function PlannerPage() {
       {plan && (
         <div className="space-y-4 animate-in fade-in zoom-in-95 duration-300">
           {/* 标题 */}
-          <Card className="bg-gradient-to-br from-love-50 to-cream-100 dark:from-love-500/10 dark:to-gray-800 text-center py-6">
-            <Sparkles className="w-6 h-6 text-love-400 mx-auto mb-2" />
-            <h2 className="text-lg font-semibold text-love-600 dark:text-love-300">
+          <Card className="bg-gradient-to-br from-coral-50 to-warm-100 dark:from-coral-500/10 dark:to-gray-800 text-center py-6">
+            <Sparkles className="w-6 h-6 text-coral-400 mx-auto mb-2" />
+            <h2 className="text-lg font-semibold text-coral-600 dark:text-coral-200">
               {plan.title}
             </h2>
-            <p className="text-xs text-gray-400 mt-1">
+            <p className="text-xs text-warm-400 mt-1">
               {scene} · {city} · {budget}
             </p>
           </Card>
@@ -236,22 +236,22 @@ export default function PlannerPage() {
           {/* 时间轴 */}
           <Card>
             <div className="flex items-center gap-2 mb-4">
-              <Clock className="w-4 h-4 text-love-400" />
-              <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+              <Clock className="w-4 h-4 text-coral-400" />
+              <h3 className="text-sm font-semibold text-warm-800 dark:text-warm-300">
                 时间安排
               </h3>
             </div>
             <div className="space-y-3">
               {plan.timeline?.map((item, i) => (
                 <div key={i} className="flex gap-4">
-                  <span className="text-sm font-bold text-love-400 w-12 flex-shrink-0">
+                  <span className="text-sm font-bold text-coral-400 w-12 flex-shrink-0">
                     {item.time}
                   </span>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-gray-800 dark:text-gray-200">
+                    <p className="text-sm font-medium text-warm-800 dark:text-gray-200">
                       {item.title}
                     </p>
-                    <p className="text-xs text-gray-400">{item.detail}</p>
+                    <p className="text-xs text-warm-400">{item.detail}</p>
                   </div>
                 </div>
               ))}
@@ -261,8 +261,8 @@ export default function PlannerPage() {
           {/* 礼物建议 */}
           <Card>
             <div className="flex items-center gap-2 mb-4">
-              <Gift className="w-4 h-4 text-love-400" />
-              <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+              <Gift className="w-4 h-4 text-coral-400" />
+              <h3 className="text-sm font-semibold text-warm-800 dark:text-warm-300">
                 礼物建议
               </h3>
             </div>
@@ -270,15 +270,15 @@ export default function PlannerPage() {
               {plan.gifts?.map((g, i) => (
                 <div
                   key={i}
-                  className="p-3 bg-love-50/50 dark:bg-love-500/5 rounded-2xl"
+                  className="p-3 bg-coral-50/50 dark:bg-coral-500/5 rounded-2xl"
                 >
                   <div className="flex items-center justify-between mb-1">
-                    <p className="text-sm font-medium text-gray-800 dark:text-gray-200">
+                    <p className="text-sm font-medium text-warm-800 dark:text-gray-200">
                       {g.name}
                     </p>
-                    <span className="text-xs font-medium text-love-500">{g.price}</span>
+                    <span className="text-xs font-medium text-coral-400">{g.price}</span>
                   </div>
-                  <p className="text-xs text-gray-400">{g.reason}</p>
+                  <p className="text-xs text-warm-400">{g.reason}</p>
                 </div>
               ))}
             </div>
@@ -287,8 +287,8 @@ export default function PlannerPage() {
           {/* 惊喜建议 */}
           <Card>
             <div className="flex items-center gap-2 mb-4">
-              <PartyPopper className="w-4 h-4 text-love-400" />
-              <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+              <PartyPopper className="w-4 h-4 text-coral-400" />
+              <h3 className="text-sm font-semibold text-warm-800 dark:text-warm-300">
                 惊喜环节
               </h3>
             </div>
@@ -296,12 +296,12 @@ export default function PlannerPage() {
               {plan.surprises?.map((s, i) => (
                 <div
                   key={i}
-                  className="p-3 bg-love-50/50 dark:bg-love-500/5 rounded-2xl"
+                  className="p-3 bg-coral-50/50 dark:bg-coral-500/5 rounded-2xl"
                 >
-                  <p className="text-sm font-medium text-gray-800 dark:text-gray-200 mb-1">
+                  <p className="text-sm font-medium text-warm-800 dark:text-gray-200 mb-1">
                     {s.title}
                   </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">{s.detail}</p>
+                  <p className="text-xs text-warm-500 dark:text-warm-400">{s.detail}</p>
                 </div>
               ))}
             </div>
@@ -310,16 +310,16 @@ export default function PlannerPage() {
           {/* 预算分析 */}
           <Card>
             <div className="flex items-center gap-2 mb-3">
-              <Wallet className="w-4 h-4 text-love-400" />
-              <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+              <Wallet className="w-4 h-4 text-coral-400" />
+              <h3 className="text-sm font-semibold text-warm-800 dark:text-warm-300">
                 预算分析
               </h3>
             </div>
-            <div className="p-3 bg-love-50/50 dark:bg-love-500/5 rounded-2xl">
-              <p className="text-sm font-semibold text-love-500 mb-1">
+            <div className="p-3 bg-coral-50/50 dark:bg-coral-500/5 rounded-2xl">
+              <p className="text-sm font-semibold text-coral-400 mb-1">
                 {plan.budget?.total}
               </p>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
+              <p className="text-xs text-warm-500 dark:text-warm-400">
                 {plan.budget?.breakdown}
               </p>
             </div>
@@ -327,11 +327,11 @@ export default function PlannerPage() {
 
           {/* 注意事项 */}
           {plan.tips && (
-            <Card className="bg-amber-50/50 dark:bg-amber-500/5 border-amber-100 dark:border-amber-500/20">
-              <h3 className="text-xs font-semibold text-amber-600 dark:text-amber-400 mb-2">
+            <Card className="bg-apricot-400/10 dark:bg-apricot-400/5 border-apricot-400/20 dark:border-apricot-400/20">
+              <h3 className="text-xs font-semibold text-apricot-500 dark:text-apricot-400 mb-2">
                 小贴士
               </h3>
-              <div className="text-xs text-gray-600 dark:text-gray-400 space-y-1">
+              <div className="text-xs text-warm-700 dark:text-warm-400 space-y-1">
                 {plan.tips.split("；").map((tip, i) => (
                   <p key={i}>· {tip.trim()}</p>
                 ))}
@@ -343,7 +343,7 @@ export default function PlannerPage() {
           <div className="text-center">
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              className="text-xs text-gray-400 hover:text-love-500 transition-colors cursor-pointer"
+              className="text-xs text-warm-400 hover:text-coral-400 transition-colors cursor-pointer"
             >
               回到顶部重新填写
             </button>

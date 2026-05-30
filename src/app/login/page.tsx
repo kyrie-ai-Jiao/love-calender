@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -75,15 +75,15 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-love-50 to-cream-100 dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-coral-50 to-warm-100 dark:from-gray-900 dark:to-gray-800">
       <div className="w-full max-w-sm">
         {/* Logo */}
         <div className="text-center mb-8">
-          <Heart className="w-10 h-10 text-love-400 fill-love-400 mx-auto mb-3" />
-          <h1 className="text-xl font-semibold text-love-700 dark:text-love-300">
+          <Heart className="w-10 h-10 text-coral-400 fill-coral-400 mx-auto mb-3" />
+          <h1 className="text-xl font-semibold text-coral-600 dark:text-coral-200">
             恋爱日历
           </h1>
-          <p className="text-xs text-gray-400 mt-1">
+          <p className="text-xs text-warm-400 mt-1">
             {isRegister ? "创建账号，开始记录" : "登录继续记录你们的每一天"}
           </p>
         </div>
@@ -92,26 +92,26 @@ export default function LoginPage() {
         <Card className="space-y-4">
           <form onSubmit={handleSubmit} className="space-y-3">
             <div>
-              <label className="block text-xs text-gray-500 mb-1">
+              <label className="block text-xs text-warm-500 mb-1">
                 邮箱（支持 QQ/163/126 等国内邮箱）
               </label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-warm-400" />
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="your@qq.com"
                   required
-                  className="w-full border border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 rounded-xl pl-10 pr-3 py-2.5 text-sm focus:outline-none focus:border-love-400 transition-colors"
+                  className="w-full border border-warm-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 rounded-xl pl-10 pr-3 py-2.5 text-sm focus:outline-none focus:border-coral-300 transition-colors"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs text-gray-500 mb-1">密码（至少6位）</label>
+              <label className="block text-xs text-warm-500 mb-1">密码（至少6位）</label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-warm-400" />
                 <input
                   type={showPwd ? "text" : "password"}
                   value={password}
@@ -119,12 +119,12 @@ export default function LoginPage() {
                   placeholder="至少6位"
                   required
                   minLength={6}
-                  className="w-full border border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 rounded-xl pl-10 pr-10 py-2.5 text-sm focus:outline-none focus:border-love-400 transition-colors"
+                  className="w-full border border-warm-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 rounded-xl pl-10 pr-10 py-2.5 text-sm focus:outline-none focus:border-coral-300 transition-colors"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPwd(!showPwd)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-warm-400 cursor-pointer"
                 >
                   {showPwd ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
@@ -156,14 +156,14 @@ export default function LoginPage() {
                 setError("");
                 setSuccess("");
               }}
-              className="text-xs text-love-500 hover:text-love-600 cursor-pointer"
+              className="text-xs text-coral-400 hover:text-coral-600 cursor-pointer"
             >
               {isRegister ? "已有账号？去登录" : "没有账号？去注册"}
             </button>
           </div>
         </Card>
 
-        <p className="text-xs text-gray-400 text-center mt-4">
+        <p className="text-xs text-warm-400 text-center mt-4">
           支持 QQ邮箱、163邮箱、126邮箱、Gmail 等所有邮箱
         </p>
       </div>

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -82,18 +82,18 @@ export default function SettingsPage() {
       <div className="flex items-center gap-3">
         <button
           onClick={() => router.back()}
-          className="p-2 -ml-2 rounded-xl hover:bg-love-50 text-gray-400 hover:text-love-500 transition-colors cursor-pointer"
+          className="p-2 -ml-2 rounded-xl hover:bg-coral-50 text-warm-400 hover:text-coral-400 transition-colors cursor-pointer"
         >
           <ArrowLeft className="w-5 h-5" />
         </button>
-        <h1 className="text-lg sm:text-xl font-semibold text-gray-800">设置</h1>
+        <h1 className="text-lg sm:text-xl font-semibold text-warm-800">设置</h1>
       </div>
 
       {/* 基本信息 */}
       <Card>
         <div className="flex items-center gap-2 mb-4">
-          <Heart className="w-4 h-4 text-love-400 fill-love-400" />
-          <h2 className="text-sm font-semibold text-gray-700">基本信息</h2>
+          <Heart className="w-4 h-4 text-coral-400 fill-coral-400" />
+          <h2 className="text-sm font-semibold text-warm-800">基本信息</h2>
         </div>
         <div className="space-y-3">
           <div className="grid grid-cols-2 gap-3">
@@ -123,8 +123,8 @@ export default function SettingsPage() {
       {/* 生日设置 */}
       <Card>
         <div className="flex items-center gap-2 mb-4">
-          <Cake className="w-4 h-4 text-love-400" />
-          <h2 className="text-sm font-semibold text-gray-700">生日设置</h2>
+          <Cake className="w-4 h-4 text-coral-400" />
+          <h2 className="text-sm font-semibold text-warm-800">生日设置</h2>
         </div>
         <div className="space-y-3">
           <InputField
@@ -146,12 +146,12 @@ export default function SettingsPage() {
       <Card>
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <Calendar className="w-4 h-4 text-love-400" />
-            <h2 className="text-sm font-semibold text-gray-700">自定义纪念日</h2>
+            <Calendar className="w-4 h-4 text-coral-400" />
+            <h2 className="text-sm font-semibold text-warm-800">自定义纪念日</h2>
           </div>
           <button
             onClick={addAnniversary}
-            className="flex items-center gap-1 text-xs text-love-500 hover:text-love-600 font-medium cursor-pointer transition-colors"
+            className="flex items-center gap-1 text-xs text-coral-400 hover:text-coral-600 font-medium cursor-pointer transition-colors"
           >
             <Plus className="w-3.5 h-3.5" />
             添加
@@ -159,7 +159,7 @@ export default function SettingsPage() {
         </div>
 
         {form.customAnniversaries.length === 0 ? (
-          <p className="text-xs text-gray-400 text-center py-4">
+          <p className="text-xs text-warm-400 text-center py-4">
             还没有自定义纪念日，点击「添加」来记录第一次牵手、第一次旅行等特殊日子
           </p>
         ) : (
@@ -167,7 +167,7 @@ export default function SettingsPage() {
             {form.customAnniversaries.map((ann) => (
               <div
                 key={ann.id}
-                className="flex flex-col sm:flex-row gap-2 p-3 bg-gray-50 rounded-2xl"
+                className="flex flex-col sm:flex-row gap-2 p-3 bg-warm-50 rounded-2xl"
               >
                 <input
                   type="text"
@@ -176,7 +176,7 @@ export default function SettingsPage() {
                     updateAnniversary(ann.id, "name", e.target.value)
                   }
                   placeholder="纪念日名称"
-                  className="flex-1 min-w-0 bg-white border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-love-400 transition-colors"
+                  className="flex-1 min-w-0 bg-white border border-warm-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-coral-300 transition-colors"
                 />
                 <div className="flex gap-2">
                   <input
@@ -185,11 +185,11 @@ export default function SettingsPage() {
                     onChange={(e) =>
                       updateAnniversary(ann.id, "date", e.target.value)
                     }
-                    className="flex-1 sm:flex-initial sm:w-36 bg-white border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-love-400 transition-colors"
+                    className="flex-1 sm:flex-initial sm:w-36 bg-white border border-warm-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-coral-300 transition-colors"
                   />
                   <button
                     onClick={() => removeAnniversary(ann.id)}
-                    className="p-2 text-gray-400 hover:text-red-400 transition-colors cursor-pointer flex-shrink-0"
+                    className="p-2 text-warm-400 hover:text-red-400 transition-colors cursor-pointer flex-shrink-0"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
@@ -217,8 +217,8 @@ export default function SettingsPage() {
 
       {/* ===== 数据导入/导出 ===== */}
       <Card>
-        <h2 className="text-sm font-semibold text-gray-700 mb-1">数据管理</h2>
-        <p className="text-xs text-gray-400 mb-4">导出备份或从备份恢复数据</p>
+        <h2 className="text-sm font-semibold text-warm-800 mb-1">数据管理</h2>
+        <p className="text-xs text-warm-400 mb-4">导出备份或从备份恢复数据</p>
 
         <div className="flex gap-3">
           {/* 导出 */}
@@ -235,7 +235,7 @@ export default function SettingsPage() {
               setImportMsg("数据已导出");
               setTimeout(() => setImportMsg(""), 2000);
             }}
-            className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl border-2 border-gray-200 text-sm text-gray-600 hover:border-love-300 hover:text-love-500 transition-colors cursor-pointer"
+            className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl border-2 border-warm-200 text-sm text-warm-700 hover:border-coral-300 hover:text-coral-400 transition-colors cursor-pointer"
           >
             <Download className="w-4 h-4" />
             导出备份
@@ -244,7 +244,7 @@ export default function SettingsPage() {
           {/* 导入 */}
           <button
             onClick={() => fileInputRef.current?.click()}
-            className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl border-2 border-gray-200 text-sm text-gray-600 hover:border-love-300 hover:text-love-500 transition-colors cursor-pointer"
+            className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl border-2 border-warm-200 text-sm text-warm-700 hover:border-coral-300 hover:text-coral-400 transition-colors cursor-pointer"
           >
             <Upload className="w-4 h-4" />
             导入备份
@@ -283,13 +283,13 @@ export default function SettingsPage() {
         </div>
 
         {importMsg && (
-          <p className="text-xs text-love-500 text-center mt-3 font-medium">
+          <p className="text-xs text-coral-400 text-center mt-3 font-medium">
             {importMsg}
           </p>
         )}
       </Card>
 
-      <p className="text-xs text-gray-400 text-center pb-6">
+      <p className="text-xs text-warm-400 text-center pb-6">
         数据保存在你的浏览器中，不会上传到任何服务器
       </p>
     </div>

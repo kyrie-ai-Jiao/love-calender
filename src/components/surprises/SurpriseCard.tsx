@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useMemo, useState } from "react";
 import { Gift, Flower2, Coffee, PartyPopper, Sparkles, ChevronDown, ChevronUp } from "lucide-react";
@@ -76,8 +76,8 @@ export default function SurpriseCard() {
   if (!loaded) {
     return (
       <Card className="py-4 animate-pulse">
-        <div className="h-4 w-24 bg-gray-200 rounded mb-3" />
-        <div className="h-8 w-full bg-gray-100 rounded-xl" />
+        <div className="h-4 w-24 bg-warm-200 rounded mb-3" />
+        <div className="h-8 w-full bg-warm-100 rounded-xl" />
       </Card>
     );
   }
@@ -91,23 +91,23 @@ export default function SurpriseCard() {
   );
 
   return (
-    <Card className="bg-gradient-to-br from-cream-50 to-love-50/30 border-love-100/50 overflow-hidden">
+    <Card className="bg-gradient-to-br from-warm-50 to-coral-50/30 border-coral-100/50 overflow-hidden">
       {/* 头部 */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <div className="p-1.5 bg-love-100 rounded-full">
-            <Sparkles className="w-4 h-4 text-love-500" />
+          <div className="p-1.5 bg-coral-100 rounded-full">
+            <Sparkles className="w-4 h-4 text-coral-400" />
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-gray-700">惊喜灵感</h3>
-            <p className="text-xs text-love-400/80">
+            <h3 className="text-sm font-semibold text-warm-800">惊喜灵感</h3>
+            <p className="text-xs text-coral-400/80">
               距离{nearestEvent.name}还有 {nearestEvent.daysLeft} 天
             </p>
           </div>
         </div>
         <button
           onClick={() => setExpanded(!expanded)}
-          className="p-1 rounded-lg hover:bg-love-50 text-gray-400 transition-colors cursor-pointer"
+          className="p-1 rounded-lg hover:bg-coral-50 text-warm-400 transition-colors cursor-pointer"
         >
           {expanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
         </button>
@@ -121,8 +121,8 @@ export default function SurpriseCard() {
             onClick={() => setActiveTab(tab.key)}
             className={`flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer ${
               activeTab === tab.key
-                ? "bg-white text-love-500 shadow-sm"
-                : "text-gray-400 hover:text-love-400"
+                ? "bg-white text-coral-400 shadow-sm"
+                : "text-warm-400 hover:text-coral-400"
             }`}
           >
             {tab.icon}
@@ -134,7 +134,7 @@ export default function SurpriseCard() {
       {/* 建议内容 */}
       {activeSuggestion && (
         <div className="bg-white/70 rounded-2xl p-4">
-          <p className="text-sm text-gray-700 leading-relaxed">
+          <p className="text-sm text-warm-800 leading-relaxed">
             {activeSuggestion.text}
           </p>
         </div>
@@ -158,11 +158,11 @@ export default function SurpriseCard() {
                 >
                   <div className="flex items-center gap-2 mb-1">
                     <span className="text-xs">{tab.icon}</span>
-                    <span className="text-xs font-medium text-love-400">
+                    <span className="text-xs font-medium text-coral-400">
                       {tab.label}
                     </span>
                   </div>
-                  <p className="text-sm text-gray-600">{s.text}</p>
+                  <p className="text-sm text-warm-700">{s.text}</p>
                 </button>
               );
             })}

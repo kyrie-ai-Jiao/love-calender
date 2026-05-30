@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -70,30 +70,30 @@ export default function CheckinPage() {
       <div className="flex items-center gap-3">
         <button
           onClick={() => router.back()}
-          className="p-2 -ml-2 rounded-xl hover:bg-love-50 text-gray-400 hover:text-love-500 transition-colors cursor-pointer"
+          className="p-2 -ml-2 rounded-xl hover:bg-coral-50 text-warm-400 hover:text-coral-400 transition-colors cursor-pointer"
         >
           <ArrowLeft className="w-5 h-5" />
         </button>
-        <h1 className="text-lg sm:text-xl font-semibold text-gray-800">情侣打卡</h1>
+        <h1 className="text-lg sm:text-xl font-semibold text-warm-800">情侣打卡</h1>
       </div>
 
       {!hasSetup ? (
         <Card className="text-center py-12">
-          <CalendarCheck className="w-8 h-8 text-love-200 mx-auto mb-3" />
-          <p className="text-sm text-gray-400">请先在设置中填写恋爱信息</p>
+          <CalendarCheck className="w-8 h-8 text-coral-100 mx-auto mb-3" />
+          <p className="text-sm text-warm-400">请先在设置中填写恋爱信息</p>
         </Card>
       ) : (
         <>
           {/* 今日概览 */}
-          <Card className="bg-gradient-to-br from-love-50 to-cream-100 text-center py-6">
-            <p className="text-xs text-gray-400 mb-1">{today}</p>
+          <Card className="bg-gradient-to-br from-coral-50 to-warm-100 text-center py-6">
+            <p className="text-xs text-warm-400 mb-1">{today}</p>
             <div className="flex items-center justify-center gap-2">
-              <CalendarCheck className="w-5 h-5 text-love-400" />
-              <span className="text-2xl font-bold text-love-500">
+              <CalendarCheck className="w-5 h-5 text-coral-400" />
+              <span className="text-2xl font-bold text-coral-400">
                 {todayTotal === 0 ? "--" : `${todayDone}/${todayTotal}`}
               </span>
             </div>
-            <p className="text-xs text-gray-400 mt-1">
+            <p className="text-xs text-warm-400 mt-1">
               {todayTotal === 0
                 ? "添加任务开始打卡"
                 : todayDone === todayTotal
@@ -109,34 +109,34 @@ export default function CheckinPage() {
             const recent7 = getRecentDates(7);
 
             return (
-              <Card key={task.id} className={isDone ? "border-love-200" : ""}>
+              <Card key={task.id} className={isDone ? "border-coral-200" : ""}>
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2.5">
                     <button
                       onClick={() => handleToggle(task.id)}
                       className={`w-7 h-7 rounded-full flex items-center justify-center border-2 transition-all cursor-pointer ${
                         isDone
-                          ? "bg-love-400 border-love-400 text-white"
-                          : "border-gray-300 text-transparent hover:border-love-300"
+                          ? "bg-coral-400 border-love-400 text-white"
+                          : "border-gray-300 text-transparent hover:border-coral-300"
                       }`}
                     >
                       <Check className="w-3.5 h-3.5" />
                     </button>
-                    <span className="text-sm text-gray-800">
+                    <span className="text-sm text-warm-800">
                       {task.emoji} {task.title}
                     </span>
                   </div>
 
                   <div className="flex items-center gap-3">
                     {streak > 0 && (
-                      <span className="flex items-center gap-1 text-xs text-love-400 font-medium">
+                      <span className="flex items-center gap-1 text-xs text-coral-400 font-medium">
                         <Flame className="w-3.5 h-3.5" />
                         {streak}天
                       </span>
                     )}
                     <button
                       onClick={() => handleDelete(task.id)}
-                      className="p-1 text-gray-300 hover:text-red-400 transition-colors cursor-pointer"
+                      className="p-1 text-warm-300 hover:text-red-400 transition-colors cursor-pointer"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>
@@ -154,8 +154,8 @@ export default function CheckinPage() {
                         title={date}
                         className={`w-7 h-7 rounded-lg flex flex-col items-center justify-center text-[10px] transition-all ${
                           done
-                            ? "bg-love-100 text-love-500 font-medium"
-                            : "bg-gray-50 text-gray-300"
+                            ? "bg-coral-100 text-coral-400 font-medium"
+                            : "bg-warm-50 text-warm-300"
                         }`}
                       >
                         <span>{d}</span>
@@ -177,7 +177,7 @@ export default function CheckinPage() {
                     key={emoji}
                     onClick={() => setNewEmoji(newEmoji === emoji ? "" : emoji)}
                     className={`w-8 h-8 rounded-lg text-sm transition-all cursor-pointer ${
-                      newEmoji === emoji ? "bg-love-100 scale-110" : "hover:bg-gray-100"
+                      newEmoji === emoji ? "bg-coral-100 scale-110" : "hover:bg-warm-100"
                     }`}
                   >
                     {emoji}
@@ -193,7 +193,7 @@ export default function CheckinPage() {
                 onChange={(e) => setNewTitle(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleAdd()}
                 placeholder="添加打卡任务..."
-                className="flex-1 border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-love-400 transition-colors"
+                className="flex-1 border border-warm-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-coral-300 transition-colors"
               />
               <Button onClick={handleAdd} variant="outline" className="flex-shrink-0">
                 <Plus className="w-4 h-4" />
@@ -204,9 +204,9 @@ export default function CheckinPage() {
           {/* 空状态 */}
           {tasks.length === 0 && (
             <Card className="text-center py-10">
-              <Flame className="w-8 h-8 text-love-200 mx-auto mb-2" />
-              <p className="text-sm text-gray-400">还没有打卡任务</p>
-              <p className="text-xs text-gray-300 mt-1">
+              <Flame className="w-8 h-8 text-coral-100 mx-auto mb-2" />
+              <p className="text-sm text-warm-400">还没有打卡任务</p>
+              <p className="text-xs text-warm-300 mt-1">
                 添加上面的任务，每天一起打卡
               </p>
             </Card>

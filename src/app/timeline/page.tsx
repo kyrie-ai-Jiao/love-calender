@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useMemo } from "react";
 import { useRouter } from "next/navigation";
@@ -27,7 +27,7 @@ interface TimelineEvent {
 const TYPE_CONFIG = {
   start: {
     icon: <Heart className="w-4 h-4 text-white fill-white" />,
-    bg: "bg-love-400",
+    bg: "bg-coral-400",
     label: "开始",
   },
   anniversary: {
@@ -124,9 +124,9 @@ export default function TimelinePage() {
     return (
       <div className="max-w-lg mx-auto px-4 sm:px-6 py-6 sm:py-10">
         <div className="animate-pulse space-y-4">
-          <div className="h-6 w-32 bg-gray-200 rounded" />
+          <div className="h-6 w-32 bg-warm-200 rounded" />
           {[...Array(4)].map((_, i) => (
-            <div key={i} className="h-20 bg-gray-100 rounded-2xl" />
+            <div key={i} className="h-20 bg-warm-100 rounded-2xl" />
           ))}
         </div>
       </div>
@@ -140,33 +140,33 @@ export default function TimelinePage() {
         <div className="flex items-center gap-3">
           <button
             onClick={() => router.back()}
-            className="p-2 -ml-2 rounded-xl hover:bg-love-50 text-gray-400 hover:text-love-500 transition-colors cursor-pointer"
+            className="p-2 -ml-2 rounded-xl hover:bg-coral-50 text-warm-400 hover:text-coral-400 transition-colors cursor-pointer"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
-          <h1 className="text-lg sm:text-xl font-semibold text-gray-800">恋爱大事记</h1>
+          <h1 className="text-lg sm:text-xl font-semibold text-warm-800">恋爱大事记</h1>
         </div>
         {events.length > 0 && (
-          <span className="text-xs text-gray-400">{events.length} 个事件</span>
+          <span className="text-xs text-warm-400">{events.length} 个事件</span>
         )}
       </div>
 
       {!hasSetup ? (
         <Card className="text-center py-12">
-          <Heart className="w-8 h-8 text-love-200 mx-auto mb-3" />
-          <p className="text-sm text-gray-400">请先在设置中填写恋爱信息</p>
+          <Heart className="w-8 h-8 text-coral-100 mx-auto mb-3" />
+          <p className="text-sm text-warm-400">请先在设置中填写恋爱信息</p>
         </Card>
       ) : events.length === 0 ? (
         <Card className="text-center py-12">
-          <Pin className="w-8 h-8 text-love-200 mx-auto mb-3" />
-          <p className="text-sm text-gray-400">还没有任何事件</p>
-          <p className="text-xs text-gray-300 mt-1">添加纪念日、照片、愿望后这里会自动生成时间线</p>
+          <Pin className="w-8 h-8 text-coral-100 mx-auto mb-3" />
+          <p className="text-sm text-warm-400">还没有任何事件</p>
+          <p className="text-xs text-warm-300 mt-1">添加纪念日、照片、愿望后这里会自动生成时间线</p>
         </Card>
       ) : (
         /* 时间线 */
         <div className="relative">
           {/* 中间的竖线 */}
-          <div className="absolute left-[19px] top-2 bottom-2 w-0.5 bg-love-100" />
+          <div className="absolute left-[19px] top-2 bottom-2 w-0.5 bg-coral-100" />
 
           <div className="space-y-4">
             {events.map((event, i) => {
@@ -198,21 +198,21 @@ export default function TimelinePage() {
                             {config.label}
                           </span>
                           {isFuture && (
-                            <span className="text-[10px] text-gray-400">未到来</span>
+                            <span className="text-[10px] text-warm-400">未到来</span>
                           )}
                         </div>
-                        <span className="text-xs text-gray-400">
+                        <span className="text-xs text-warm-400">
                           {formatChineseDate(event.date)}
                         </span>
                       </div>
 
                       <div className="flex items-center gap-1.5">
                         {event.emoji && <span>{event.emoji}</span>}
-                        <h3 className="text-sm font-medium text-gray-800">{event.title}</h3>
+                        <h3 className="text-sm font-medium text-warm-800">{event.title}</h3>
                       </div>
 
                       {event.description && (
-                        <p className="text-xs text-gray-400 mt-1">{event.description}</p>
+                        <p className="text-xs text-warm-400 mt-1">{event.description}</p>
                       )}
 
                       {/* 照片缩略图 */}

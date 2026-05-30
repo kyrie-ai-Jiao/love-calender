@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { ListTodo } from "lucide-react";
@@ -18,17 +18,17 @@ export default function WishPreview() {
 
   return (
     <Link href="/wishes" className="block">
-      <Card className="py-4 bg-gradient-to-r from-love-50/50 to-cream-50/50 border-love-100/40 hover:shadow-md transition-shadow">
+      <Card className="py-4 bg-gradient-to-r from-coral-50/50 to-cream-50/50 border-coral-100/40 hover:shadow-md transition-shadow">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="p-1.5 bg-love-100 rounded-full">
-              <ListTodo className="w-3.5 h-3.5 text-love-500" />
+            <div className="p-1.5 bg-coral-100 rounded-full">
+              <ListTodo className="w-3.5 h-3.5 text-coral-400" />
             </div>
             <div>
-              <p className="text-sm text-gray-700 font-medium">
+              <p className="text-sm text-warm-800 font-medium">
                 {allDone ? "愿望全部完成！" : "共同愿望清单"}
               </p>
-              <p className="text-xs text-gray-400">
+              <p className="text-xs text-warm-400">
                 {allDone
                   ? `完成了全部 ${completedCount} 个愿望`
                   : `已完成 ${completedCount} / ${wishes.length} 个`}
@@ -36,8 +36,8 @@ export default function WishPreview() {
             </div>
           </div>
           {/* 迷你进度环 */}
-          <div className="w-8 h-8 rounded-full border-2 border-love-200 flex items-center justify-center">
-            <span className="text-xs font-bold text-love-400">
+          <div className="w-8 h-8 rounded-full border-2 border-coral-200 flex items-center justify-center">
+            <span className="text-xs font-bold text-coral-400">
               {Math.round((completedCount / wishes.length) * 100)}%
             </span>
           </div>
