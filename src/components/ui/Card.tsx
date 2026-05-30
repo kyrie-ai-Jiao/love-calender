@@ -26,6 +26,7 @@ export default function Card({
         ${clickable ? "cursor-pointer hover:shadow-card active:scale-[0.98]" : ""}
         ${className}
       `}
+      style={{ isolation: "isolate" }}
     >
       {children}
     </div>
