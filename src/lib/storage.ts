@@ -33,6 +33,11 @@ const MIGRATIONS: Record<number, MigrationFn> = {
     ...data,
     tasks: [],
   }),
+  // 版本4 → 版本5：新增 coverPhoto 字段
+  4: (data) => ({
+    ...data,
+    coverPhoto: "",
+  }),
 };
 
 /**

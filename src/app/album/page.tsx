@@ -7,6 +7,7 @@ import {
   ImagePlus,
   Trash2,
   Image as ImageIcon,
+  Star,
 } from "lucide-react";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
@@ -55,8 +56,19 @@ export default function AlbumPage() {
     updateCoupleInfo({
       ...coupleInfo,
       photos: photos.filter((p) => p.id !== id),
+      // 如果删的是封面，清除封面
+      coverPhoto: coupleInfo.coverPhoto === photos.find(p => p.id === id)?.data
+        ? ""
+        : coupleInfo.coverPhoto,
     });
     if (previewId === id) setPreviewId(null);
+  };
+
+  const setAsCover = (dataUrl: string) => {
+    updateCoupleInfo({
+      ...coupleInfo,
+      coverPhoto: coupleInfo.coverPhoto === dataUrl ? "" : dataUrl,
+    });
   };
 
   const handleCaptionChange = (id: string, caption: string) => {
@@ -144,15 +156,38 @@ export default function AlbumPage() {
                       alt={photo.caption || "照片"}
                       className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                     />
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDelete(photo.id);
-                      }}
-                      className="absolute top-2 right-2 p-1.5 bg-black/40 rounded-full opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
-                    >
-                      <Trash2 className="w-3.5 h-3.5 text-white" />
-                    </button>
+                    {/* 封面标记 */}
+                    {coupleInfo.coverPhoto === photo.data && (
+                      <div className="absolute top-2 left-2 p-1 bg-coral-400/80 rounded-full">
+                        <Star className="w-3 h-3 text-white fill-white" />
+                      </div>
+                    )}
+                    {/* 操作按钮 */}
+                    <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setAsCover(photo.data);
+                        }}
+                        className={`p-1.5 rounded-full cursor-pointer transition-colors ${
+                          coupleInfo.coverPhoto === photo.data
+                            ? "bg-coral-400/80"
+                            : "bg-black/40 hover:bg-coral-400/60"
+                        }`}
+                        title={coupleInfo.coverPhoto === photo.data ? "取消封面" : "设为封面"}
+                      >
+                        <Star className={`w-3.5 h-3.5 text-white ${coupleInfo.coverPhoto === photo.data ? "fill-white" : ""}`} />
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDelete(photo.id);
+                        }}
+                        className="p-1.5 bg-black/40 rounded-full hover:bg-red-500/60 transition-colors cursor-pointer"
+                      >
+                        <Trash2 className="w-3.5 h-3.5 text-white" />
+                      </button>
+                    </div>
                   </div>
 
                   {/* 展开预览 */}

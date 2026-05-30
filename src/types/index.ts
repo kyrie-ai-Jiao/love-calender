@@ -1,6 +1,6 @@
 // ===== 数据版本号 =====
 // 当数据结构发生变化时，递增此版本号并编写对应的迁移函数
-export const STORAGE_VERSION = 4;
+export const STORAGE_VERSION = 5;
 
 // ===== 打卡任务 =====
 export interface Task {
@@ -46,6 +46,7 @@ export interface CoupleInfo {
   photos: Photo[];           // 情侣相册
   wishes: Wish[];            // 共同愿望清单
   tasks: Task[];             // 情侣打卡
+  coverPhoto: string;       // 封面照片 base64（首页景深背景）
 }
 
 // ===== 默认值 =====
@@ -59,4 +60,5 @@ export const DEFAULT_COUPLE_INFO: CoupleInfo = {
   photos: [],
   wishes: [],
   tasks: [],
+  coverPhoto: "",
 };
