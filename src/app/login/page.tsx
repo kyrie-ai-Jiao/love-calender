@@ -14,29 +14,37 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [showPwd, setShowPwd] = useState(false);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    setSuccess("");
     setLoading(true);
 
     try {
       if (isRegister) {
         // 注册
-        const { error: signUpError } = await supabase.auth.signUp({
+        const { data, error: signUpError } = await supabase.auth.signUp({
           email: email.trim(),
           password,
         });
+
         if (signUpError) throw signUpError;
-        // 注册成功后自动创建空数据行
-        setError("");
-        // 注册成功直接登录
-        const { error: signInError } = await supabase.auth.signInWithPassword({
-          email: email.trim(),
-          password,
-        });
-        if (signInError) throw signInError;
+
+        // 检查是否需要邮箱确认
+        if (data.user && !data.session) {
+          // 需要确认邮箱
+          setSuccess("注册成功！请检查邮箱并点击确认链接，然后返回登录。");
+          setIsRegister(false);
+          setLoading(false);
+          return;
+        }
+
+        // 不需要确认，直接注册成功
+        setSuccess("注册成功，正在跳转...");
+        setTimeout(() => router.push("/"), 800);
       } else {
         // 登录
         const { error: signInError } = await supabase.auth.signInWithPassword({
@@ -44,16 +52,21 @@ export default function LoginPage() {
           password,
         });
         if (signInError) throw signInError;
+        router.push("/");
       }
-
-      router.push("/");
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "操作失败";
-      if (msg.includes("Invalid login")) {
+
+      if (msg.includes("Invalid login") || msg.includes("Invalid email")) {
         setError("邮箱或密码错误");
-      } else if (msg.includes("already registered")) {
-        setError("该邮箱已注册，请直接登录");
+      } else if (msg.includes("Email not confirmed")) {
+        setError("邮箱还未验证，请先去邮箱点击确认链接");
+      } else if (msg.includes("already registered") || msg.includes("already exists")) {
+        setError("该邮箱已注册，请切换到登录");
+      } else if (msg.includes("password") && msg.includes("6")) {
+        setError("密码至少需要6位");
       } else {
+        // 显示原始错误，方便调试
         setError(msg);
       }
     }
@@ -79,14 +92,16 @@ export default function LoginPage() {
         <Card className="space-y-4">
           <form onSubmit={handleSubmit} className="space-y-3">
             <div>
-              <label className="block text-xs text-gray-500 mb-1">邮箱</label>
+              <label className="block text-xs text-gray-500 mb-1">
+                邮箱（支持 QQ/163/126 等国内邮箱）
+              </label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="your@email.com"
+                  placeholder="your@qq.com"
                   required
                   className="w-full border border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 rounded-xl pl-10 pr-3 py-2.5 text-sm focus:outline-none focus:border-love-400 transition-colors"
                 />
@@ -94,7 +109,7 @@ export default function LoginPage() {
             </div>
 
             <div>
-              <label className="block text-xs text-gray-500 mb-1">密码</label>
+              <label className="block text-xs text-gray-500 mb-1">密码（至少6位）</label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <input
@@ -122,6 +137,12 @@ export default function LoginPage() {
               </p>
             )}
 
+            {success && (
+              <p className="text-xs text-green-600 bg-green-50 dark:bg-green-900/20 rounded-lg px-3 py-2">
+                {success}
+              </p>
+            )}
+
             <Button type="submit" variant="primary" className="w-full">
               {loading ? "请稍候..." : isRegister ? "注册" : "登录"}
             </Button>
@@ -133,6 +154,7 @@ export default function LoginPage() {
               onClick={() => {
                 setIsRegister(!isRegister);
                 setError("");
+                setSuccess("");
               }}
               className="text-xs text-love-500 hover:text-love-600 cursor-pointer"
             >
@@ -140,6 +162,10 @@ export default function LoginPage() {
             </button>
           </div>
         </Card>
+
+        <p className="text-xs text-gray-400 text-center mt-4">
+          支持 QQ邮箱、163邮箱、126邮箱、Gmail 等所有邮箱
+        </p>
       </div>
     </div>
   );
