@@ -27,8 +27,28 @@ export default function RootLayout({
     <html
       lang="zh-CN"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full bg-cream-50 text-gray-800 flex flex-col">
+      <head>
+        {/* 防闪烁：在页面渲染前读取主题偏好 */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var theme = localStorage.getItem("love-calendar-theme");
+                  if (theme === "dark") {
+                    document.documentElement.classList.add("dark");
+                  } else if (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+                    document.documentElement.classList.add("dark");
+                  }
+                } catch(e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
+      <body className="min-h-full flex flex-col bg-cream-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors">
         <Header />
         <main className="flex-1">{children}</main>
       </body>
