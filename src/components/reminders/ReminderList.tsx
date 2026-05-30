@@ -26,9 +26,9 @@ const ICON_MAP = {
 } as const;
 
 const getAlertStyle = (daysLeft: number) => {
-  if (daysLeft === 0) return "bg-coral-100 border-coral-300 border-2";
-  if (daysLeft <= 3) return "bg-coral-50 border-coral-200 border";
-  return "bg-apricot-400/10 border-apricot-400/20 border";
+  if (daysLeft === 0) return "bg-coral-100 dark:bg-coral-500/20 border-coral-300 dark:border-coral-500/40 border-2";
+  if (daysLeft <= 3) return "bg-coral-50 dark:bg-coral-500/10 border-coral-200 dark:border-coral-500/30 border";
+  return "bg-apricot-400/10 dark:bg-apricot-400/5 border-apricot-400/20 dark:border-apricot-400/30 border";
 };
 
 export default function ReminderList() {

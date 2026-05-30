@@ -116,8 +116,8 @@ export default function CheckinPage() {
                       onClick={() => handleToggle(task.id)}
                       className={`w-7 h-7 rounded-full flex items-center justify-center border-2 transition-all cursor-pointer ${
                         isDone
-                          ? "bg-coral-400 border-love-400 text-white"
-                          : "border-gray-300 text-transparent hover:border-coral-300"
+                          ? "bg-coral-400 border-coral-400 text-white"
+                          : "border-warm-300 dark:border-warm-600 text-transparent hover:border-coral-300"
                       }`}
                     >
                       <Check className="w-3.5 h-3.5" />

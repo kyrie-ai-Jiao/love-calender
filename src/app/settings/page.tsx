@@ -180,7 +180,7 @@ export default function SettingsPage() {
                     updateAnniversary(ann.id, "name", e.target.value)
                   }
                   placeholder="纪念日名称"
-                  className="flex-1 min-w-0 bg-white border border-warm-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-coral-300 transition-colors"
+                  className="flex-1 min-w-0 bg-white dark:bg-warm-800/50 dark:text-warm-200 border border-warm-200 dark:border-warm-700 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-coral-300 transition-colors"
                 />
                 <div className="flex gap-2">
                   <input
@@ -189,7 +189,7 @@ export default function SettingsPage() {
                     onChange={(e) =>
                       updateAnniversary(ann.id, "date", e.target.value)
                     }
-                    className="flex-1 sm:flex-initial sm:w-36 bg-white border border-warm-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-coral-300 transition-colors"
+                    className="flex-1 sm:flex-initial sm:w-36 bg-white dark:bg-warm-800/50 dark:text-warm-200 border border-warm-200 dark:border-warm-700 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-coral-300 transition-colors"
                   />
                   <button
                     onClick={() => removeAnniversary(ann.id)}

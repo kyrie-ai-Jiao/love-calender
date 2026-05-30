@@ -126,8 +126,8 @@ export default function Countdown() {
               onClick={() => setSelectedEvent(event)}
               className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl transition-colors cursor-pointer text-left ${
                 event.daysLeft <= 7
-                  ? "bg-coral-50 border border-coral-200 hover:bg-coral-100"
-                  : "bg-warm-50/50 hover:bg-warm-50 hover:border-warm-200 border border-transparent"
+                  ? "bg-coral-50 dark:bg-coral-500/10 border border-coral-200 dark:border-coral-500/30 hover:bg-coral-100 dark:hover:bg-coral-500/20"
+                  : "bg-warm-50/50 dark:bg-warm-800/30 hover:bg-warm-50 dark:hover:bg-warm-800/50 hover:border-warm-200 dark:hover:border-warm-700 border border-transparent"
               }`}
             >
               <div className="flex items-center gap-2.5 min-w-0">

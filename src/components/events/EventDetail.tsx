@@ -60,7 +60,7 @@ export default function EventDetail({ event, onClose }: EventDetailProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/30 backdrop-blur-sm">
-      <div className="bg-white rounded-t-3xl sm:rounded-3xl shadow-xl p-6 w-full sm:max-w-sm max-h-[85vh] overflow-y-auto space-y-5 animate-in slide-in-from-bottom sm:zoom-in-95 duration-300">
+      <div className="bg-white dark:bg-warm-800 rounded-t-3xl sm:rounded-3xl shadow-modal p-6 w-full sm:max-w-sm max-h-[85vh] overflow-y-auto space-y-5 animate-in slide-in-from-bottom sm:zoom-in-95 duration-300">
         {/* 关闭按钮 */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">

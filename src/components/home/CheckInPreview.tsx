@@ -20,7 +20,7 @@ export default function CheckInPreview() {
 
   return (
     <Link href="/checkin" className="block">
-      <Card className="py-4 bg-gradient-to-r from-coral-50/50 to-cream-50/50 border-coral-100/40 hover:shadow-md transition-shadow">
+      <Card className="py-4 bg-gradient-to-r from-coral-50/50 to-warm-100/50 border-coral-100/40 hover:shadow-md transition-shadow">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className={`p-1.5 rounded-full ${allDone && tasks.length > 0 ? "bg-coral-400" : "bg-coral-100"}`}>
