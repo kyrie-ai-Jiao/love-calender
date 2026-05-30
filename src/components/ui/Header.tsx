@@ -3,11 +3,15 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Heart, Settings, Image as ImageIcon, ListTodo, CalendarCheck, Pin, Sun, Moon } from "lucide-react";
+import { Heart, Settings, Image as ImageIcon, ListTodo, CalendarCheck, Pin, Sun, Moon, User, LogOut } from "lucide-react";
 import { getTheme, setTheme } from "@/lib/theme";
+import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
   const pathname = usePathname();
+  const router = useRouter();
+  const { user, signOut } = useAuth();
   const [theme, setThemeState] = useState<"light" | "dark">("light");
 
   useEffect(() => {
@@ -46,6 +50,26 @@ export default function Header() {
               <Moon className="w-4 h-4 sm:w-5 sm:h-5" />
             )}
           </button>
+
+          {/* 登录/用户 */}
+          {user ? (
+            <button
+              onClick={() => signOut()}
+              className="p-2 rounded-xl hover:bg-love-50 dark:hover:bg-gray-800 text-love-400 transition-colors cursor-pointer"
+              aria-label="退出登录"
+              title={`已登录: ${user.email}`}
+            >
+              <LogOut className="w-4 h-4 sm:w-5 sm:h-5" />
+            </button>
+          ) : (
+            <button
+              onClick={() => router.push("/login")}
+              className="p-2 rounded-xl hover:bg-love-50 dark:hover:bg-gray-800 text-gray-400 hover:text-love-500 transition-colors cursor-pointer"
+              aria-label="登录"
+            >
+              <User className="w-4 h-4 sm:w-5 sm:h-5" />
+            </button>
+          )}
 
           {pathname !== "/timeline" && (
             <Link
