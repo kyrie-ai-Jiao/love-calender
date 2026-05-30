@@ -81,7 +81,7 @@ export default function SettingsPage() {
       {/* 顶部导航 */}
       <div className="flex items-center gap-3">
         <button
-          onClick={() => router.back()}
+          onClick={() => router.push("/")}
           className="p-2 -ml-2 rounded-xl hover:bg-coral-50 text-warm-400 hover:text-coral-400 transition-colors cursor-pointer"
         >
           <ArrowLeft className="w-5 h-5" />
