@@ -1,8 +1,9 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Bell, Heart, Cake, Star, Sparkles } from "lucide-react";
 import Card from "@/components/ui/Card";
+import EventDetail from "@/components/events/EventDetail";
 import { useLoveData } from "@/hooks/useLoveData";
 import { daysUntil, getAnniversaryYears } from "@/lib/dateUtils";
 import { HOLIDAYS } from "@/data/holidays";
@@ -14,6 +15,8 @@ interface Reminder {
   icon: "anniversary" | "birthday" | "holiday";
   emoji?: string;
   subtitle: string;
+  targetMonth: number;
+  targetDay: number;
 }
 
 const ICON_MAP = {
@@ -30,6 +33,7 @@ const getAlertStyle = (daysLeft: number) => {
 
 export default function ReminderList() {
   const { coupleInfo, hasSetup, loaded } = useLoveData();
+  const [selectedEvent, setSelectedEvent] = useState<Reminder | null>(null);
 
   const reminders = useMemo((): Reminder[] => {
     if (!hasSetup) return [];
@@ -50,6 +54,8 @@ export default function ReminderList() {
         daysLeft: annDaysLeft,
         icon: "anniversary",
         subtitle: annDaysLeft === 0 ? "就是今天！" : `还有${annDaysLeft}天`,
+        targetMonth: annMonth,
+        targetDay: annDay,
       });
     }
 
@@ -64,6 +70,8 @@ export default function ReminderList() {
           daysLeft: bd,
           icon: "birthday",
           subtitle: bd === 0 ? "就是今天！" : `还有${bd}天`,
+          targetMonth: m,
+          targetDay: d,
         });
       }
     }
@@ -78,6 +86,8 @@ export default function ReminderList() {
           daysLeft: bd,
           icon: "birthday",
           subtitle: bd === 0 ? "就是今天！" : `还有${bd}天`,
+          targetMonth: m,
+          targetDay: d,
         });
       }
     }
@@ -94,6 +104,8 @@ export default function ReminderList() {
           daysLeft: dl,
           icon: "anniversary",
           subtitle: dl === 0 ? "就是今天！" : `还有${dl}天`,
+          targetMonth: m,
+          targetDay: d,
         });
       }
     }
@@ -109,6 +121,8 @@ export default function ReminderList() {
           icon: "holiday",
           emoji: holiday.emoji,
           subtitle: dl === 0 ? "就是今天！" : `还有${dl}天`,
+          targetMonth: holiday.month,
+          targetDay: holiday.day,
         });
       }
     }
@@ -128,55 +142,65 @@ export default function ReminderList() {
   if (reminders.length === 0) return null;
 
   return (
-    <Card className="overflow-hidden">
-      <div className="flex items-center gap-2 mb-3">
-        <div className="p-1.5 bg-love-100 rounded-full">
-          <Bell className="w-4 h-4 text-love-500" />
-        </div>
-        <div>
-          <h3 className="text-sm font-semibold text-gray-700">临近提醒</h3>
-          <p className="text-xs text-gray-400">7天内即将到来</p>
-        </div>
-      </div>
-
-      <div className="space-y-2">
-        {reminders.map((reminder) => (
-          <div
-            key={reminder.id}
-            className={`flex items-center justify-between px-4 py-3 rounded-2xl transition-all ${getAlertStyle(
-              reminder.daysLeft
-            )}`}
-          >
-            <div className="flex items-center gap-2.5 min-w-0">
-              <div className="p-1.5 bg-white/70 rounded-full flex-shrink-0">
-                {ICON_MAP[reminder.icon]}
-              </div>
-              <div className="min-w-0">
-                <p className="text-sm font-medium text-gray-800 truncate">
-                  {reminder.emoji && <span className="mr-1">{reminder.emoji}</span>}
-                  {reminder.name}
-                </p>
-                <p className="text-xs text-love-500 font-medium">
-                  {reminder.subtitle}
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-1 flex-shrink-0 ml-3">
-              {reminder.daysLeft === 0 ? (
-                <Sparkles className="w-4 h-4 text-love-400 animate-pulse" />
-              ) : (
-                <>
-                  <span className="text-xl font-bold text-love-500">
-                    {reminder.daysLeft}
-                  </span>
-                  <span className="text-xs text-love-400">天</span>
-                </>
-              )}
-            </div>
+    <>
+      <Card className="overflow-hidden">
+        <div className="flex items-center gap-2 mb-3">
+          <div className="p-1.5 bg-love-100 rounded-full">
+            <Bell className="w-4 h-4 text-love-500" />
           </div>
-        ))}
-      </div>
-    </Card>
+          <div>
+            <h3 className="text-sm font-semibold text-gray-700">临近提醒 · 点击查看详情</h3>
+            <p className="text-xs text-gray-400">7天内即将到来</p>
+          </div>
+        </div>
+
+        <div className="space-y-2">
+          {reminders.map((reminder) => (
+            <button
+              key={reminder.id}
+              onClick={() => setSelectedEvent(reminder)}
+              className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl transition-all cursor-pointer text-left hover:opacity-90 ${getAlertStyle(
+                reminder.daysLeft
+              )}`}
+            >
+              <div className="flex items-center gap-2.5 min-w-0">
+                <div className="p-1.5 bg-white/70 rounded-full flex-shrink-0">
+                  {ICON_MAP[reminder.icon]}
+                </div>
+                <div className="min-w-0">
+                  <p className="text-sm font-medium text-gray-800 truncate">
+                    {reminder.emoji && <span className="mr-1">{reminder.emoji}</span>}
+                    {reminder.name}
+                  </p>
+                  <p className="text-xs text-love-500 font-medium">
+                    {reminder.subtitle}
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-1 flex-shrink-0 ml-3">
+                {reminder.daysLeft === 0 ? (
+                  <Sparkles className="w-4 h-4 text-love-400 animate-pulse" />
+                ) : (
+                  <>
+                    <span className="text-xl font-bold text-love-500">
+                      {reminder.daysLeft}
+                    </span>
+                    <span className="text-xs text-love-400">天</span>
+                  </>
+                )}
+              </div>
+            </button>
+          ))}
+        </div>
+      </Card>
+
+      {selectedEvent && (
+        <EventDetail
+          event={selectedEvent}
+          onClose={() => setSelectedEvent(null)}
+        />
+      )}
+    </>
   );
 }
