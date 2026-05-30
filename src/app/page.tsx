@@ -4,6 +4,7 @@ import LoveQuote from "@/components/home/LoveQuote";
 import ReminderList from "@/components/reminders/ReminderList";
 import SurpriseCard from "@/components/surprises/SurpriseCard";
 import PhotoMemory from "@/components/home/PhotoMemory";
+import WishPreview from "@/components/home/WishPreview";
 
 export default function Home() {
   return (
@@ -17,6 +18,9 @@ export default function Home() {
 
       {/* 恋爱天数卡片 */}
       <LoveDays />
+
+      {/* 愿望进度 */}
+      <WishPreview />
 
       {/* 照片回忆 */}
       <PhotoMemory />

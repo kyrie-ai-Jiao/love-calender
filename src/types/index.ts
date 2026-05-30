@@ -1,6 +1,15 @@
 // ===== 数据版本号 =====
 // 当数据结构发生变化时，递增此版本号并编写对应的迁移函数
-export const STORAGE_VERSION = 2;
+export const STORAGE_VERSION = 3;
+
+// ===== 愿望 =====
+export interface Wish {
+  id: string;
+  title: string;
+  description: string;
+  completed: boolean;
+  createdAt: string;  // "2026-05-30"
+}
 
 // ===== 照片 =====
 export interface Photo {
@@ -27,6 +36,7 @@ export interface CoupleInfo {
   partner2Birthday: string; // 对方的生日
   customAnniversaries: Anniversary[]; // 自定义纪念日
   photos: Photo[];           // 情侣相册
+  wishes: Wish[];            // 共同愿望清单
 }
 
 // ===== 默认值 =====
@@ -38,4 +48,5 @@ export const DEFAULT_COUPLE_INFO: CoupleInfo = {
   partner2Birthday: "",
   customAnniversaries: [],
   photos: [],
+  wishes: [],
 };

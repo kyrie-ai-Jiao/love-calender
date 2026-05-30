@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Heart, Settings, Image as ImageIcon } from "lucide-react";
+import { Heart, Settings, Image as ImageIcon, ListTodo } from "lucide-react";
 
 export default function Header() {
   const pathname = usePathname();
@@ -21,6 +21,15 @@ export default function Header() {
         </Link>
 
         <nav className="flex items-center gap-1">
+          {pathname !== "/wishes" && (
+            <Link
+              href="/wishes"
+              className="p-2 rounded-xl hover:bg-love-50 text-gray-400 hover:text-love-500 transition-colors"
+              aria-label="愿望清单"
+            >
+              <ListTodo className="w-4 h-4 sm:w-5 sm:h-5" />
+            </Link>
+          )}
           {pathname !== "/album" && (
             <Link
               href="/album"

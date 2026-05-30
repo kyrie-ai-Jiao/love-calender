@@ -23,6 +23,11 @@ const MIGRATIONS: Record<number, MigrationFn> = {
     ...data,
     photos: [],
   }),
+  // 版本2 → 版本3：新增 wishes 字段
+  2: (data) => ({
+    ...data,
+    wishes: [],
+  }),
 };
 
 /**
