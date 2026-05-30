@@ -140,34 +140,40 @@ export default function SurpriseCard() {
         </div>
       )}
 
-      {/* 展开后显示全部4条 */}
-      {expanded && (
-        <div className="mt-3 space-y-2">
-          {surpriseSet.suggestions
-            .filter((s) => s.category !== activeTab)
-            .map((s, i) => {
-              const tab = TABS.find((t) => t.key === s.category)!;
-              return (
-                <button
-                  key={i}
-                  onClick={() => {
-                    setActiveTab(s.category);
-                    setExpanded(false);
-                  }}
-                  className="w-full text-left bg-white/50 rounded-xl p-3 hover:bg-white/80 transition-colors cursor-pointer"
-                >
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-xs">{tab.icon}</span>
-                    <span className="text-xs font-medium text-coral-400">
-                      {tab.label}
-                    </span>
-                  </div>
-                  <p className="text-sm text-warm-700">{s.text}</p>
-                </button>
-              );
-            })}
+      {/* 展开后显示全部4条 — 带过渡动画 */}
+      <div
+        className={`grid transition-all duration-300 ease-out ${
+          expanded ? "grid-rows-[1fr] mt-3 opacity-100" : "grid-rows-[0fr] opacity-0"
+        }`}
+      >
+        <div className="overflow-hidden">
+          <div className="space-y-2">
+            {surpriseSet.suggestions
+              .filter((s) => s.category !== activeTab)
+              .map((s, i) => {
+                const tab = TABS.find((t) => t.key === s.category)!;
+                return (
+                  <button
+                    key={s.category}
+                    onClick={() => {
+                      setActiveTab(s.category);
+                      setExpanded(false);
+                    }}
+                    className="w-full text-left bg-white/50 dark:bg-warm-800/50 rounded-xl p-3 hover:bg-white/80 dark:hover:bg-warm-800/80 transition-colors cursor-pointer"
+                  >
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-xs">{tab.icon}</span>
+                      <span className="text-xs font-medium text-coral-400">
+                        {tab.label}
+                      </span>
+                    </div>
+                    <p className="text-sm text-warm-700 dark:text-warm-300">{s.text}</p>
+                  </button>
+                );
+              })}
+          </div>
         </div>
-      )}
+      </div>
     </Card>
   );
 }

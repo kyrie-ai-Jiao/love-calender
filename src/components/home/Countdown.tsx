@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Clock, Heart, Cake, Star } from "lucide-react";
 import Card from "@/components/ui/Card";
+import { SkeletonCard } from "@/components/ui/Skeleton";
 import EventDetail from "@/components/events/EventDetail";
 import { useLoveData } from "@/hooks/useLoveData";
 import { daysUntil, getAnniversaryYears } from "@/lib/dateUtils";
@@ -89,17 +90,7 @@ export default function Countdown() {
     return events.sort((a, b) => a.daysLeft - b.daysLeft).slice(0, 4);
   }, [coupleInfo, hasSetup]);
 
-  if (!loaded) {
-    return (
-      <Card className="py-4 animate-pulse">
-        <div className="h-4 w-24 bg-warm-200 rounded mb-3" />
-        <div className="space-y-2">
-          <div className="h-8 w-full bg-warm-100 rounded-xl" />
-          <div className="h-8 w-full bg-warm-100 rounded-xl" />
-        </div>
-      </Card>
-    );
-  }
+  if (!loaded) return <SkeletonCard rows={2} />;
 
   if (!hasSetup) {
     return (

@@ -23,7 +23,8 @@ export default function Card({
         shadow-soft
         p-4 sm:p-5
         transition-all duration-300 ease-out
-        ${clickable ? "cursor-pointer hover:shadow-card active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral-300 focus-visible:ring-offset-2" : ""}
+        hover:-translate-y-0.5
+        ${clickable ? "cursor-pointer hover:shadow-lift active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral-300 focus-visible:ring-offset-2" : ""}
         ${className}
       `}
       style={{ isolation: "isolate" }}

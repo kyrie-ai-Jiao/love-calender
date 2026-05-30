@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Bell, Heart, Cake, Star, Sparkles } from "lucide-react";
 import Card from "@/components/ui/Card";
+import { SkeletonCard, EmptyState } from "@/components/ui/Skeleton";
 import EventDetail from "@/components/events/EventDetail";
 import { useLoveData } from "@/hooks/useLoveData";
 import { daysUntil, getAnniversaryYears } from "@/lib/dateUtils";
@@ -130,16 +131,17 @@ export default function ReminderList() {
     return result.sort((a, b) => a.daysLeft - b.daysLeft);
   }, [coupleInfo, hasSetup]);
 
-  if (!loaded) {
+  if (!loaded) return <SkeletonCard rows={1} />;
+
+  if (reminders.length === 0) {
     return (
-      <Card className="py-4 animate-pulse">
-        <div className="h-4 w-24 bg-warm-200 rounded mb-3" />
-        <div className="h-10 w-full bg-warm-100 rounded-xl" />
-      </Card>
+      <EmptyState
+        icon={<Bell className="w-6 h-6 text-warm-300 dark:text-warm-500" />}
+        title="暂无临近提醒"
+        description="7天内没有纪念日或节日"
+      />
     );
   }
-
-  if (reminders.length === 0) return null;
 
   return (
     <>
