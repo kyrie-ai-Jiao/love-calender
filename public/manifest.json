@@ -6,8 +6,8 @@
   "scope": "/love-calender/",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "background_color": "#fefdfb",
-  "theme_color": "#f26373",
+  "background_color": "#fdfaf7",
+  "theme_color": "#f28482",
   "lang": "zh-CN",
   "icons": [
     {

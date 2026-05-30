@@ -66,7 +66,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/love-calender/icons/icon.svg" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="theme-color" content="#f26373" />
+        <meta name="theme-color" content="#f28482" />
       </head>
       <body className="min-h-full flex flex-col pb-16 sm:pb-18">
         <AuthProvider>
