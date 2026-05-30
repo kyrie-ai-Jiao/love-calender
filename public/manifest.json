@@ -1,0 +1,20 @@
+{
+  "name": "恋爱日历 - 记录我们的每一天",
+  "short_name": "恋爱日历",
+  "description": "记录恋爱日期，提醒纪念日，发现惊喜灵感",
+  "start_url": "/love-calender/",
+  "scope": "/love-calender/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#fefdfb",
+  "theme_color": "#f26373",
+  "lang": "zh-CN",
+  "icons": [
+    {
+      "src": "/love-calender/icons/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
