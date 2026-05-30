@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Heart, Calendar, Settings } from "lucide-react";
 import Card from "@/components/ui/Card";
@@ -28,6 +28,16 @@ export default function LoveDays() {
     partner2Name: coupleInfo.partner2Name,
     startDate: coupleInfo.startDate,
   });
+
+  // 弹窗打开时锁定背景滚动
+  useEffect(() => {
+    if (showForm) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [showForm]);
 
   if (!loaded) {
     return (

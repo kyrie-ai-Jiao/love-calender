@@ -20,7 +20,7 @@ export default function Button({
   size = "md",
 }: ButtonProps) {
   const base =
-    "inline-flex items-center justify-center gap-2 font-medium transition-all duration-200 active:scale-[0.97] select-none";
+    "inline-flex items-center justify-center gap-2 font-medium transition-all duration-200 active:scale-[0.97] select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral-300 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-warm-900";
 
   const sizeClass = {
     sm: "rounded-[14px] px-4 py-2 text-xs",

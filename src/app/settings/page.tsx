@@ -225,8 +225,7 @@ export default function SettingsPage() {
         <p className="text-xs text-warm-400 mb-4">导出备份或从备份恢复数据</p>
 
         <div className="flex gap-3">
-          {/* 导出 */}
-          <button
+          <Button
             onClick={() => {
               const json = JSON.stringify(coupleInfo, null, 2);
               const blob = new Blob([json], { type: "application/json" });
@@ -239,20 +238,23 @@ export default function SettingsPage() {
               setImportMsg("数据已导出");
               setTimeout(() => setImportMsg(""), 2000);
             }}
-            className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl border-2 border-warm-200 text-sm text-warm-700 hover:border-coral-300 hover:text-coral-400 transition-colors cursor-pointer"
+            variant="outline"
+            size="sm"
+            className="flex-1"
           >
             <Download className="w-4 h-4" />
             导出备份
-          </button>
+          </Button>
 
-          {/* 导入 */}
-          <button
+          <Button
             onClick={() => fileInputRef.current?.click()}
-            className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl border-2 border-warm-200 text-sm text-warm-700 hover:border-coral-300 hover:text-coral-400 transition-colors cursor-pointer"
+            variant="outline"
+            size="sm"
+            className="flex-1"
           >
             <Upload className="w-4 h-4" />
             导入备份
-          </button>
+          </Button>
           <input
             ref={fileInputRef}
             type="file"
