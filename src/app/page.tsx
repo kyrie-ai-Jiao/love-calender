@@ -5,6 +5,7 @@ import ReminderList from "@/components/reminders/ReminderList";
 import SurpriseCard from "@/components/surprises/SurpriseCard";
 import PhotoMemory from "@/components/home/PhotoMemory";
 import WishPreview from "@/components/home/WishPreview";
+import CheckInPreview from "@/components/home/CheckInPreview";
 
 export default function Home() {
   return (
@@ -21,6 +22,9 @@ export default function Home() {
 
       {/* 愿望进度 */}
       <WishPreview />
+
+      {/* 今日打卡 */}
+      <CheckInPreview />
 
       {/* 照片回忆 */}
       <PhotoMemory />

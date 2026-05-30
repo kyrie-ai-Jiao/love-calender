@@ -79,3 +79,45 @@ export function formatChineseDate(dateStr: string): string {
   const [y, m, d] = dateStr.split("-");
   return `${y}年${parseInt(m)}月${parseInt(d)}日`;
 }
+
+/**
+ * 计算连续打卡天数（从今天往回数）
+ * completedDates: ["2026-05-30", "2026-05-29", "2026-05-27"]
+ * → 2 天（5-29断了，5-27不算）
+ */
+export function getStreak(completedDates: string[]): number {
+  if (completedDates.length === 0) return 0;
+
+  const today = formatDateStr(new Date());
+  const dates = new Set(completedDates);
+
+  // 今天还没打卡 → 从昨天开始数
+  let check = new Date(today);
+  if (!dates.has(today)) {
+    check.setDate(check.getDate() - 1);
+  }
+
+  let streak = 0;
+  while (true) {
+    const dateStr = formatDateStr(check);
+    if (!dates.has(dateStr)) break;
+    streak++;
+    check.setDate(check.getDate() - 1);
+  }
+
+  return streak;
+}
+
+/**
+ * 获取最近N天的日期字符串列表
+ */
+export function getRecentDates(days: number): string[] {
+  const result: string[] = [];
+  const today = new Date();
+  for (let i = 0; i < days; i++) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    result.push(formatDateStr(d));
+  }
+  return result;
+}

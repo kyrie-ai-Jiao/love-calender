@@ -28,6 +28,11 @@ const MIGRATIONS: Record<number, MigrationFn> = {
     ...data,
     wishes: [],
   }),
+  // 版本3 → 版本4：新增 tasks 字段
+  3: (data) => ({
+    ...data,
+    tasks: [],
+  }),
 };
 
 /**
