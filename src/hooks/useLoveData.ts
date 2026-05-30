@@ -6,43 +6,41 @@ import { getCoupleInfo, saveCoupleInfo } from "@/lib/storage";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/hooks/useAuth";
 
+/** 后台静默同步 */
+async function syncToCloud(userId: string, data: CoupleInfo) {
+  try {
+    await supabase.from("couple_data").upsert({ user_id: userId, data });
+  } catch {
+    // 静默
+  }
+}
+
 export function useLoveData() {
   const { user } = useAuth();
   const [coupleInfo, setCoupleInfo] = useState<CoupleInfo>(DEFAULT_COUPLE_INFO);
   const [loaded, setLoaded] = useState(false);
 
-  // 加载：localStorage 永远是唯一真实数据源
+  // 加载：localStorage 是唯一数据源
   useEffect(() => {
-    const local = getCoupleInfo();
-    setCoupleInfo(local);
+    setCoupleInfo(getCoupleInfo());
     setLoaded(true);
   }, []);
 
-  // 登录后：后台尝试把本地数据上传到云端
+  // 登录后：后台把本地数据上传云端
   useEffect(() => {
     if (!user || !loaded) return;
     const local = getCoupleInfo();
-    if (!local.partner1Name || !local.startDate) return;
-
-    // 后台静默同步，失败不提示
-    supabase
-      .from("couple_data")
-      .upsert({ user_id: user.id, data: local })
-      .catch(() => {});
+    if (local.partner1Name && local.startDate) {
+      syncToCloud(user.id, local);
+    }
   }, [user, loaded]);
 
-  // 保存：先写 localStorage（绝不会失败），再后台同步云端
+  // 保存：先写本地，再后台同步
   const updateCoupleInfo = useCallback(
     (newInfo: CoupleInfo) => {
       setCoupleInfo(newInfo);
       saveCoupleInfo(newInfo);
-
-      if (user) {
-        supabase
-          .from("couple_data")
-          .upsert({ user_id: user.id, data: newInfo })
-          .catch(() => {});
-      }
+      if (user) syncToCloud(user.id, newInfo);
     },
     [user]
   );
