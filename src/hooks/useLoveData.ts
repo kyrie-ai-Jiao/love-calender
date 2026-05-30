@@ -11,40 +11,39 @@ export function useLoveData() {
   const [coupleInfo, setCoupleInfo] = useState<CoupleInfo>(DEFAULT_COUPLE_INFO);
   const [loaded, setLoaded] = useState(false);
 
-  // 加载数据：云端优先，本地兜底
+  // 加载数据：云端优先，出错时本地兜底
   useEffect(() => {
     async function load() {
-      if (user) {
-        // 已登录：从 Supabase 加载
-        const { data: row } = await supabase
-          .from("couple_data")
-          .select("data")
-          .eq("user_id", user.id)
-          .single();
+      try {
+        if (user) {
+          // 已登录：从 Supabase 加载
+          const { data: row } = await supabase
+            .from("couple_data")
+            .select("data")
+            .eq("user_id", user.id)
+            .single();
 
-        if (row?.data) {
-          setCoupleInfo(row.data as CoupleInfo);
-        } else {
-          // 云端没有数据 → 尝试从本地迁移
-          const local = getCoupleInfo();
-          if (local.partner1Name && local.startDate) {
-            // 本地有数据 → 上传到云端
-            await supabase.from("couple_data").upsert({
-              user_id: user.id,
-              data: local,
-            });
-            setCoupleInfo(local);
+          if (row?.data) {
+            setCoupleInfo(row.data as CoupleInfo);
           } else {
-            // 全新用户 → 创建空行
-            await supabase.from("couple_data").upsert({
-              user_id: user.id,
-              data: DEFAULT_COUPLE_INFO,
-            });
-            setCoupleInfo(DEFAULT_COUPLE_INFO);
+            // 云端没有 → 尝试本地迁移
+            const local = getCoupleInfo();
+            if (local.partner1Name && local.startDate) {
+              await supabase.from("couple_data").upsert({
+                user_id: user.id,
+                data: local,
+              });
+              setCoupleInfo(local);
+            } else {
+              setCoupleInfo(DEFAULT_COUPLE_INFO);
+            }
           }
+        } else {
+          // 未登录：从 localStorage
+          setCoupleInfo(getCoupleInfo());
         }
-      } else {
-        // 未登录：从 localStorage 加载
+      } catch {
+        // Supabase 出错 → 静默降级到 localStorage
         setCoupleInfo(getCoupleInfo());
       }
       setLoaded(true);
@@ -52,18 +51,23 @@ export function useLoveData() {
     load();
   }, [user]);
 
-  // 更新数据：云端 + 本地同时写
+  // 更新数据：先写本地确保不丢，再同步云端
   const updateCoupleInfo = useCallback(
     async (newInfo: CoupleInfo) => {
+      // 1. 立即更新状态 + 写 localStorage（同步操作，绝不会失败）
       setCoupleInfo(newInfo);
-      // 本地兜底
       saveCoupleInfo(newInfo);
-      // 云端同步
+
+      // 2. 后台同步到云端（失败不影响本地）
       if (user) {
-        await supabase.from("couple_data").upsert({
-          user_id: user.id,
-          data: newInfo,
-        });
+        try {
+          await supabase.from("couple_data").upsert({
+            user_id: user.id,
+            data: newInfo,
+          });
+        } catch {
+          // 静默忽略云端错误，本地数据已保存
+        }
       }
     },
     [user]

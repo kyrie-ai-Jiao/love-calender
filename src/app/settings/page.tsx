@@ -29,12 +29,17 @@ export default function SettingsPage() {
   const [saved, setSaved] = useState(false);
   const [importMsg, setImportMsg] = useState("");
 
+  // 从 coupleInfo 同步到表单（仅在首次加载时）
+  const initialized = useRef(false);
   useEffect(() => {
-    setForm(coupleInfo);
+    if (!initialized.current && coupleInfo.partner1Name) {
+      setForm(coupleInfo);
+      initialized.current = true;
+    }
   }, [coupleInfo]);
 
   const handleFieldChange = (field: keyof CoupleInfo, value: string) => {
-    setForm({ ...form, [field]: value });
+    setForm((prev) => ({ ...prev, [field]: value }));
   };
 
   const handleSave = () => {
