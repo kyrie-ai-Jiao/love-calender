@@ -6,6 +6,7 @@ interface ButtonProps {
   variant?: "primary" | "outline" | "ghost";
   className?: string;
   type?: "button" | "submit";
+  disabled?: boolean;
 }
 
 /**
@@ -18,23 +19,25 @@ export default function Button({
   variant = "primary",
   className = "",
   type = "button",
+  disabled = false,
 }: ButtonProps) {
   const baseClass =
     "inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-3 font-medium text-sm transition-all duration-200 active:scale-95 cursor-pointer";
 
   const variantClass = {
     primary:
-      "bg-love-400 text-white hover:bg-love-500 shadow-md shadow-love-200/50",
+      "bg-love-400 text-white hover:bg-love-500 shadow-md shadow-love-200/50 disabled:opacity-40 disabled:cursor-not-allowed",
     outline:
-      "border-2 border-love-300 text-love-600 hover:bg-love-50",
+      "border-2 border-love-300 text-love-600 hover:bg-love-50 disabled:opacity-40 disabled:cursor-not-allowed",
     ghost:
-      "text-gray-500 hover:text-love-500 hover:bg-love-50",
+      "text-gray-500 hover:text-love-500 hover:bg-love-50 disabled:opacity-40 disabled:cursor-not-allowed",
   };
 
   return (
     <button
       type={type}
       onClick={onClick}
+      disabled={disabled}
       className={`${baseClass} ${variantClass[variant]} ${className}`}
     >
       {children}

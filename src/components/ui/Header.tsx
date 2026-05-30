@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Heart, Settings, Image as ImageIcon, ListTodo, CalendarCheck, Pin, Sun, Moon, User, LogOut, Sparkles } from "lucide-react";
+import { Heart, Settings, Image as ImageIcon, ListTodo, CalendarCheck, Pin, Sun, Moon, User, LogOut, Sparkles, PartyPopper } from "lucide-react";
 import { getTheme, setTheme } from "@/lib/theme";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
@@ -59,6 +59,17 @@ export default function Header() {
               aria-label="AI 助手"
             >
               <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" />
+            </button>
+          )}
+
+          {/* AI 策划师 */}
+          {pathname !== "/planner" && (
+            <button
+              onClick={() => router.push("/planner")}
+              className="p-2 rounded-xl hover:bg-love-50 dark:hover:bg-gray-800 text-gray-400 hover:text-love-500 transition-colors cursor-pointer"
+              aria-label="AI 策划师"
+            >
+              <PartyPopper className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
           )}
 
