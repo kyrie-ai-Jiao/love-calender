@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { AuthProvider } from "@/hooks/useAuth";
 import Header from "@/components/ui/Header";
+import TabBar from "@/components/ui/TabBar";
 import PwaRegister from "@/components/ui/PwaRegister";
 import "./globals.css";
 
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f26373",
+  themeColor: "#f28482",
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
@@ -67,10 +68,11 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="theme-color" content="#f26373" />
       </head>
-      <body className="min-h-full flex flex-col bg-cream-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors">
+      <body className="min-h-full flex flex-col pb-16 sm:pb-18">
         <AuthProvider>
           <Header />
           <main className="flex-1">{children}</main>
+          <TabBar />
         </AuthProvider>
         <PwaRegister />
       </body>

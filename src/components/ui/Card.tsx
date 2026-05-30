@@ -3,16 +3,29 @@ import { ReactNode } from "react";
 interface CardProps {
   children: ReactNode;
   className?: string;
+  /** 是否使用粉色玻璃效果 */
+  tinted?: boolean;
+  /** 是否可点击 */
+  clickable?: boolean;
 }
 
-/**
- * 温馨卡片组件
- * 移动端内边距较小(p-4)，桌面端较大(sm:p-6)
- */
-export default function Card({ children, className = "" }: CardProps) {
+export default function Card({
+  children,
+  className = "",
+  tinted = false,
+  clickable = false,
+}: CardProps) {
   return (
     <div
-      className={`bg-white/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl shadow-md sm:shadow-lg shadow-love-100/30 border border-white/60 p-4 sm:p-6 transition-shadow hover:shadow-lg sm:hover:shadow-xl ${className}`}
+      className={`
+        ${tinted ? "glass-tinted" : "glass"}
+        rounded-[20px] sm:rounded-[24px]
+        shadow-soft
+        p-4 sm:p-5
+        transition-all duration-300 ease-out
+        ${clickable ? "cursor-pointer hover:shadow-card active:scale-[0.98]" : ""}
+        ${className}
+      `}
     >
       {children}
     </div>
