@@ -1,3 +1,7 @@
+// ===== 数据版本号 =====
+// 当数据结构发生变化时，递增此版本号并编写对应的迁移函数
+export const STORAGE_VERSION = 1;
+
 // ===== 纪念日 =====
 export interface Anniversary {
   id: string;
